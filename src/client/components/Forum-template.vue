@@ -35,7 +35,7 @@
 
 <script>
 import topics from './forum/Topics-template.vue';
-import topiccategory from './forum/Topiccategory-template.vue';
+import topiccategory from './forum/TopicCategory-template.vue';
 
 export default {
     //name: 'app',
