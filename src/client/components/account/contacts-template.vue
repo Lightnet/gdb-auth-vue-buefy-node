@@ -18,16 +18,16 @@
 			</b-field>
 			<span v-if="bprofileinfo">
 			<b-field label="Name">
-				<b-input v-model="pubname" placeholder="name"> </b-input>
+				<b-input v-model="pubname" placeholder="name"  style="width:400px;"> </b-input>
 			</b-field>
 			<b-field label="Born">
-				<b-input v-model="pborn" placeholder="born"> </b-input> 
+				<b-input v-model="pborn" placeholder="born"  style="width:400px;"> </b-input> 
 			</b-field>
 			<b-field label="Education">
-				<b-input v-model="peducation" placeholder="education"></b-input>
+				<b-input v-model="peducation" placeholder="education"  style="width:400px;"></b-input>
 			</b-field>
 			<b-field label="Skills">
-				<b-input v-model="pskills" placeholder="skills"></b-input> 
+				<b-input v-model="pskills" placeholder="skills"  style="width:400px;"></b-input> 
 			</b-field>
 			</span>
 		</div>

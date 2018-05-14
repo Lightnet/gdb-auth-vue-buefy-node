@@ -94,7 +94,7 @@ import createtemplate from './components/forum/CreateTopic-template.vue';
 import toDoListTemplate from './components/Todolist-template.vue';
 import accountTemplate from './components/Account-template.vue';
 import MsgBoxTemplate from './components/PMBox-template.vue';
-import chatTemplate from './components/chat-template.vue';
+import chatTemplate from './components/Chat-template.vue';
 
 import PrototypeTemplate from './components/Prototype-template.vue';
 

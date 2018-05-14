@@ -1,8 +1,5 @@
 <template>
   	<div v-if="blogin">
-		<!--
-    	<h6>Forum Posts</h6>
-		-->
     	<div v-if="bcategory">
 			<topiccategory 
 				:posts="posts" 
