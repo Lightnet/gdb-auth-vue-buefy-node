@@ -9,7 +9,9 @@
 			</p>
 		</div>
 		<div v-if="bforumlistselect">
-			<ForumList> </ForumList>
+			<ForumList
+				:forums="forumlist"
+			></ForumList>
 		</div>
 
 		<div id="topicscroll" style="overflow-y:scroll;">
@@ -38,6 +40,10 @@ export default {
 		return{
 			topicidhandle:'topicscroll',
 			bforumlistselect:false,
+			forumlist:[
+				{id:'testsdf',name:'test'},
+				{id:'testddf',name:'test2'},
+			],
 			//bpost:false,
 			//mtopics: this.topics,
 		}

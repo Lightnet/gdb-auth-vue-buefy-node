@@ -5,8 +5,6 @@
                 @selectcontact="selectcontact"
 			></PM>
 
-			{{pubkey}}
-
             <PMList
                 :messages="messages"
             ></PMList>

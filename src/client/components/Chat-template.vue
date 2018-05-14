@@ -4,7 +4,10 @@
 			<label>Chat Room:(Not public yet!)</label>
 			<b-switch v-model="bchatlistselect">Chat Room List</b-switch>
 			<div v-if="bchatlistselect">
-				<ChatList></ChatList>
+				<ChatList
+					:chatrooms="chatrooms"
+					@chatroomselect="chatroomselect"
+				></ChatList>
 			</div>
 			<ChatLog 
 				:messages="messages"
@@ -49,7 +52,12 @@ export default {
 			chatmessage:'test message',
 			publickey_chat : '0CKF4mpoQ1KcQy_mNOoIgB5EjoAhPwLe49bGn5URdBY.XqRVAfqyCpyUawlUDumtMitr6IZrRIUUEwNV6z-onNM',
 			epublickey_chat : '0VhBMpjKslndJbh3BFmNWca1TeIFq4PEerZJcRmNH9k.pW-MTXsu7witNqyYLGIuguQhDpZ5TCojE87O9gOB9nc',
-			chatidhandle:'chatscroll'
+			chatidhandle:'chatscroll',
+			chatrooms:[
+				{id:'233w45',name:'test'},
+				{id:'232345',name:'test2'},
+				{id:'2s2345',name:'test3'},
+			],
 		}
 	},
 	components: {
@@ -75,6 +83,9 @@ export default {
 
 	},
 	methods:{
+		chatroomselect(event){
+			console.log(event);
+		},
 		handleResize(event){
 			if(!document.getElementById(this.chatidhandle))
 				return;

@@ -2,9 +2,18 @@
 	<div>
 		<div class="field is-grouped is-grouped-left">
 			<p class="control">
-				<b-select placeholder="Select a Forum">
+				<b-select placeholder="Select a Forum" v-model="forumid" v-on:input="$emit('forumidselect',forumid)">
+					<option  
+					v-for="forum in forums" 
+					:key="forum.id" 
+					:value="forum.id"
+					>
+					{{forum.name}}
+					</option>
+					<!--
 					<option>Test1</option>
 					<option>Test2</option>
+					-->
 				</b-select>
 			</p>
 			<p class="control">
@@ -30,10 +39,12 @@
 <script>
 export default {
     //name: 'app',
+	props:['forums'],
     data() {
 		return {
 			bforumlistselect:false,
-			forums:[],
+			//forums:[],
+			forumid:'',
 		}
 	},
 	created(){

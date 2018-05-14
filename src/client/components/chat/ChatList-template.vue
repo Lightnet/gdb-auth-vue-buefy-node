@@ -1,9 +1,18 @@
 <template>
 	<div class="field is-grouped is-grouped-left">
 		<p class="control">
-			<b-select placeholder="Select a Chat">
+			<b-select placeholder="Select a Chat" v-model="chatroomid" v-on:input="$emit('chatroomselect',chatroomid)">
+				<option  
+					v-for="chatroom in chatrooms" 
+					:key="chatroom.id" 
+					:value="chatroom.id"
+					>
+					{{chatroom.name}}
+					</option>
+				<!--
 				<option>Test1</option>
 				<option>Test2</option>
+				-->
 			</b-select>
 		</p>
 		<p class="control">
@@ -35,10 +44,11 @@
 //import bus from '../../bus';
 
 export default {
-	//props:['blogin'],
+	props:['chatrooms'],
 	data() {
 		return{
 			//bchatlistselect:false,
+			chatroomid:'',
 		}
 	},
 	components: {
