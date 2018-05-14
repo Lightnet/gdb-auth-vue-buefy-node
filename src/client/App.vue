@@ -122,6 +122,7 @@ export default {
 		this.$on('update:username',(event)=>{
 			console.log("data child?");
 		});
+		//document.querySelector('body').classList.add("dark");
 	},
 	components: {
 		'home':hometemplate,
@@ -147,17 +148,18 @@ export default {
 			console.log(event);
 			console.log(event.target.innerText);
 			
-			if(event.target.innerText == 'light'){
+			if(event.target.innerText == 'Light'){
 				//require('./element-light.scss');
 				//console.log(document);
 				document.querySelector('body').classList.remove("dark");
 				document.querySelector('body').classList.add("light");
 				return;
 			}
-			if(event.target.innerText == 'dark'){
+			if(event.target.innerText == 'Dark'){
 				//require('./element-dark.scss');
 				document.querySelector('body').classList.remove("light");
 				document.querySelector('body').classList.add("dark");
+				//document.querySelector('body').classList.add("theme_dark");
 				return;
 			}
 			//check if string is empty incase it goes blank.

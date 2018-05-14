@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<div class="card" style="width:800px;">
+		<div class="card" style="width:890px;">
 			<div class="card-content">
 				<div class="media-content">
 					<p class="label is-text">Alias: {{username}}</p>
 				</div>
 			</div>
 			<div class="content">
-				<label class="label is-text">Public Key:</label> 
 				<b-field>
+					<label class="button is-text">Public Key:</label> 
 					<b-input id="pubkey" style="width:740px;" v-model="userpublickey" readonly="readonly"></b-input> 
 					<p class="control">
 						<button class="button" v-on:click="copypubkey"> 

@@ -4,10 +4,10 @@
 
 		<section v-if="bchangepassword">
 			<b-field label="Current Password">
-				<b-input v-model="upassword" placeholder="Current Password" style="width:760px;"></b-input>
+				<b-input v-model="upassword" placeholder="Current Password" style="width:360px;"></b-input>
 			</b-field>
 			<b-field label="New Password">
-				<b-input v-model="unpassword" placeholder="New Password"></b-input>
+				<b-input v-model="unpassword" placeholder="New Password" style="width:360px;"></b-input>
 			</b-field>
 			<b-field>
 				<button class="button is-primary" v-on:click="changepassword"> Change Password </button>

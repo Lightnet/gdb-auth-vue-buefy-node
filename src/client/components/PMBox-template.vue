@@ -5,6 +5,8 @@
                 @selectcontact="selectcontact"
 			></PM>
 
+			{{pubkey}}
+
             <PMList
                 :messages="messages"
             ></PMList>
@@ -45,12 +47,12 @@ export default {
     },
     methods:{
         selectcontact(event){
-			console.log('event selected: ',event);
+			console.log('event selected: ', event);
 			this.pubkey = event;
-			this.updateSelectAliasMessage();
+			this.updateSelectAliasMessage();//update select contract to view
         },
         async updateSelectAliasMessage(){
-			//console.log("message?");
+			console.log("update messages?");
 			this.messages = [];
 			let user = this.$root.$gun.user();
 			//console.log(this.pubkey);

@@ -2,13 +2,19 @@
     <div>
         <div id="messagescroll" style="overflow-y: scroll;">
             <label class="label is-text">Messages:</label>
-            <el-card class="box-card" v-for="message in messages" :key="message.id">
+            <div class="card" v-for="message in messages" :key="message.id">
                 <div>
-                <el-tag>From: {{ message.from }} </el-tag>
-                <el-tag type="info"> {{ message.message }} </el-tag>
-                <button type="danger" style="float: right; padding: 3px" icon="el-icon-delete" circle></button>
+                <label class="button is-text">From: {{ message.from }} </label>
+                <label class="button is-text"> {{ message.message }} </label>
+                <a class="icon" style="float: right;">
+                    <b-icon
+                        pack="fas"
+                        icon="trash"
+                        >
+                    </b-icon>
+                </a>
                 </div>
-            </el-card>
+            </div>
         </div>
     </div>
 </template>

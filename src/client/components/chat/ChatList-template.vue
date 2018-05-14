@@ -24,8 +24,8 @@
 		</p>
 
 		<p class="control">
-			<button class="button" href="#">Options</button>
 			<button class="button" href="#">Create Room</button>
+			<button class="button" href="#">Options</button>
 		</p>
 	</div>
 </template>

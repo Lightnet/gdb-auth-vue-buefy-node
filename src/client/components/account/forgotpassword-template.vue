@@ -2,7 +2,7 @@
 	<div>
 		<section>
 			<b-field>
-				Forget Password
+				Forgot Password
 			</b-field>
 			<b-field label="Alias">
 				<b-input placeholder="alias" v-model="aliasname" style="width:300px"></b-input>

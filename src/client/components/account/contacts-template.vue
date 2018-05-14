@@ -1,18 +1,20 @@
 <template>
 	<div>
-        <section label-width="92px">
+        <div class="container">
 			<b-field>
-				<label class="button is-text">Profile key : </label>
+				<label class="label">Profile Contact:</label>
+			</b-field>
+			<b-field>
+				<label class="button is-text">Public key:</label>
 				<b-input style="width:760px;" v-model="pubkey" placeholder="profile key">
 				</b-input>
 				<button class="button is-primary" @click="addcontact">Add</button>
-				
 			</b-field>
 			<b-field>
 				<label class="label is-text">Status: {{pubkeystatus}}</label>
 			</b-field>
 			<b-field>
-				<b-switch v-model="bprofileinfo">Profile Information</b-switch>
+				<b-switch v-model="bprofileinfo">Display information</b-switch>
 			</b-field>
 			<span v-if="bprofileinfo">
 			<b-field label="Name">
@@ -28,30 +30,31 @@
 				<b-input v-model="pskills" placeholder="skills"></b-input> 
 			</b-field>
 			</span>
-		</section>
+		</div>
 
 		<div>
 			<label class="label is-text">Contacts:</label>
-			<div id="contactscroll" style="overflow:auto;">
+			<div id="contactscroll"  class="container" style="overflow:auto;">
 
-				<div class="card" style="width:800px;" v-for="item in contacts" :key="item.id">
-					<div class="card-content">
-						<div class="media-content">
-							<p class="label is-text">Alias: {{ item.alias }} 
-								<button class="button" style="float: right;" v-on:click="deletecontact(item)">
-									<b-icon
-										pack="fas"
-										icon="trash"
-										>
-									</b-icon>
-								</button>
-							</p>
-						</div>
-					</div>
+				<div class="card" style="width:900px;border-style:solid;border-width:1px;" v-for="item in contacts" :key="item.id">
+					<header class="card-header">
+						<p class="card-header-title">
+							Alias: {{ item.alias }}
+						</p>
+
+						<a class="card-header-icon" style="float: right;" v-on:click="deletecontact(item)">
+							<b-icon
+								pack="fas"
+								icon="trash"
+								>
+							</b-icon>
+							</a>
+					</header>
 
 					<div class="content">
-						<label class="label is-text">Public Key:</label>
+						
 						<b-field>
+							<label class="button is-text">Public Key:</label>
 							<b-input :id="item.id" v-model="item.id" readonly="readonly" style="width:740px;"> </b-input>
 							<p class="control">
 								<button class="button" v-on:click="copypubkey(item.id)">
@@ -64,7 +67,6 @@
 							</p>
 						</b-field>
 					</div>
-
 				</div>
 
 			</div>
