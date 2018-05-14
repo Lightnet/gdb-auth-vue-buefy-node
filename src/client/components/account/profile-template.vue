@@ -1,0 +1,205 @@
+<template>
+	<div>
+		<div class="card" style="width:800px;">
+			<div class="card-content">
+				<div class="media-content">
+					<p class="label is-text">Alias: {{username}}</p>
+				</div>
+			</div>
+			<div class="content">
+				<label class="label is-text">Public Key:</label> 
+				<b-field>
+					<b-input id="pubkey" style="width:740px;" v-model="userpublickey" readonly="readonly"></b-input> 
+					<p class="control">
+						<button class="button" v-on:click="copypubkey"> 
+							<b-icon
+								pack="fas"
+								icon="copy"
+								size="is-small">
+							</b-icon> 
+						</button>
+					</p>
+				</b-field>
+			</div>
+		</div>
+
+		<label class="is-text" v-if="bhint"> Please go to options for Forgot Password to setup hint. </label>
+
+		<br><b-switch v-model="bprofileinfo">Profile Information</b-switch>
+
+		<section v-if="bprofileinfo">
+			<b-field>
+				<label class="button is-text">Alias</label>
+				<b-input style="width:400px;" v-model="pubname" placeholder="name" v-on:change="updateprofiledata('name',pubname)"></b-input>
+				<button class="button" v-on:click="access_pubkey('pubname')">
+					<b-icon
+                	pack="fas"
+                	icon="user-plus"
+                	size="is-small">
+            		</b-icon>
+				</button>
+			</b-field>
+			<b-field>
+				<label class="button is-text">Born</label>
+				<b-input style="width:400px;" v-model="pubborn" placeholder="born" v-on:change="updateprofiledata('born',pubborn)"></b-input>
+				<button class="button" v-on:click="access_pubkey('pubborn')">
+					<b-icon
+                	pack="fas"
+                	icon="user-plus"
+                	size="is-small">
+            		</b-icon>
+				</button>
+			</b-field>
+			<b-field>
+				<label class="button is-text">Education</label>
+				<b-input style="width:400px;" v-model="pubeducation" placeholder="education" v-on:change="updateprofiledata('education',pubeducation)"></b-input>
+				<button class="button" v-on:click="access_pubkey('pubeducation')">
+					<b-icon
+                	pack="fas"
+                	icon="user-plus"
+                	size="is-small">
+            		</b-icon>
+				</button>
+			</b-field>
+			<b-field>
+				<label class="button is-text">Skills</label>
+				<b-input style="width:400px;" v-model="pubskills" placeholder="skills" v-on:change="updateprofiledata('skills',pubskills)"></b-input>
+				<button class="button" v-on:click="access_pubkey('pubskills')">
+					<b-icon
+                	pack="fas"
+                	icon="user-plus"
+                	size="is-small">
+            		</b-icon>
+				</button>
+			</b-field>
+		</section>
+
+    </div>
+</template>
+<script>
+import bus from '../../bus';
+
+export default {
+	//props:['username','userpublickey'],
+	data() {
+		return{
+			username:'',
+			userpublickey:'',
+
+			pubname:'',
+			pubborn:'',
+			pubeducation:'',
+			pubskills:'',
+			bprofileinfo:false,
+			bhint:false,
+		}
+    },
+    async created(){
+
+		if(this.$root.user.is){
+			let user = this.$root.user;
+			this.username = user.is.alias;
+			this.userpublickey = user.is.pub;
+
+			this.pubname = await user.get('profile').get('name').then();
+			this.pubborn = await user.get('profile').get('born').then();
+			this.pubeducation = await user.get('profile').get('education').then();
+			this.pubskills = await user.get('profile').get('skills').then();
+
+			let hint = await user.get('hint').then();
+			//console.log(hint);
+			if(!hint){
+				this.bhint = true;
+			}
+		}
+	},
+	methods:{
+		copypubkey(){
+			/* Get the text field */
+			var copyText = document.getElementById("pubkey");
+			//console.log(copyText);
+			/* Select the text field */
+			copyText.select();  
+			/* Copy the text inside the text field */
+			document.execCommand("Copy");  
+			/* Alert the copied text */
+			//alert("Copied the text: " + copyText.value);
+			//this.$message({message:'Public Key Copy:' + copyText.value ,type: 'success',duration:800});
+			this.$toast.open({
+						message: 'Public Key Copy:' + copyText.value,
+						type: 'is-success'
+					});
+		},
+		updateprofiledata(value,key){
+			//console.log(value);
+			this.$root.user.get('profile').get(value).put(key,(ack)=>{
+				//console.log(ack);
+				if(ack.ok){
+					this.$message({message:'Update ' + value + '!',type: 'success',duration:800});
+				}
+			});
+		},
+		async access_pubkey(event){
+			//console.log(event);
+			//console.log("test");
+			this.$prompt('Alias Public Key:', 'Tip', {
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancel',
+			}).then(event => {
+				//console.log(event.value);
+
+				var pub = (event.value || '').trim();
+
+				if(!pub) {
+					this.$message('Empty!');
+					return 
+				}
+
+				var to = this.$root.$gun.user(pub);
+				;(async () => {
+					var who = await to.get('alias').then();
+
+					if(!who) {
+						this.$message({
+							type: 'warning',
+							message: 'Public key fail!'
+						});
+						return;
+					}
+					//console.log(who);
+					this.grantaccess_user(who,to);
+				})();
+				
+			}).catch(() => {
+          		this.$message({
+            		type: 'info',
+            		message: 'Alias Public key canceled!'
+          		});       
+        	});
+		},
+		grantaccess_user(who,to){
+			this.$confirm('Grant access Alias to ' + who + '?', 'Tip', {
+				confirmButtonText: 'OK',
+				cancelButtonText: 'Cancel',
+				type: 'warning',
+			}).then(event2 => {
+
+				//user.get('profile').get(event).grant(to);
+				this.$message({
+					type: 'success',
+					message: 'Grant completed'
+				});
+
+			}).catch(() => {
+				this.$message({
+					type: 'info',
+					message: 'Grant canceled!'
+				});       
+			});
+		}
+    },
+}
+</script>
+<style lang="scss">
+
+</style>
