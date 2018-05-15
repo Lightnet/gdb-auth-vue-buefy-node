@@ -1,12 +1,29 @@
 <template>
 	<div id="chatscroll" style="overflow-y: scroll;">
 		<div class="card" v-for="message in messages" :key="message.id">
-			<div div class="card-content">
-				<el-tag class="wrap">{{ message.from }}</el-tag>
-				<button class="button" style="float: right;" circle v-on:click="deletechat(message)"></button>
-				<p v-if="!message.bedit">
-				{{ message.message }}
-				</p>
+			<div class="card-content">
+				<label class="wrap" >Alias: {{ message.from }} > </label>
+				<label class="wrap" v-if="!message.bedit">
+					{{ message.message }}
+				</label>
+
+				<button class="button" style="float: right;" circle v-on:click="deletechat(message)">
+					<b-icon
+						pack="fas"
+						icon="trash"
+						>
+					</b-icon>
+				</button>
+
+
+				<button class="button" style="float: right;" circle v-on:click="deletechat(message)">
+					<b-icon
+						pack="fas"
+						icon="edit"
+						>
+					</b-icon>
+				</button>
+				
 				<b-input v-if="message.bedit" v-model="message.message" v-on:change="chateditchange(message)">
 				</b-input>
 			</div>

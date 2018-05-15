@@ -7,10 +7,13 @@
 	<div v-else>
 		<br>
 		<center>
-			<b-icon pack="fas" icon="user"></b-icon>
-			Please Login.
-			<span class="icon"><i class="fas exclamation-circle"></i></span>
-		</center>
+            <b-icon pack="fas" icon="user"></b-icon>
+            Please Login.
+            <b-icon
+                pack="fas"
+                icon="exclamation-triangle">
+            </b-icon>
+        </center>
 	</div>
 </template>
 

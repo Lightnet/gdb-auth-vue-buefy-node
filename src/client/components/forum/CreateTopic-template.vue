@@ -90,16 +90,24 @@ export default {
 				if(this.pubkey){
 					//console.log("keyfound!");
 					let gun = this.$root.user;
-					gun.get(this.pubkey).set(post,function(ack){
+					gun.get(this.pubkey).set(post,(ack)=>{
 						//console.log(ack);
 						if(ack.err){
 							self.poststatus = 'Error Post!';
-							self.$message.error({message:'Error Post!',duration:800});
+							//self.$message.error({message:'Error Post!',duration:800});
+							self.$toast.open({
+								message: 'Error Post!',
+								type: 'is-warning'
+							});
 						}
 						if(ack.ok){
 							self.poststatus = 'Posted!';
 							self.bpost = false;
-							self.$message({message:'Posted!',type: 'success',duration:800});
+							//self.$message({message:'Posted!',type: 'success',duration:800});
+							self.$toast.open({
+								message: 'Posted!',
+								type: 'is-success'
+							});
 						}
 						//clear public key
 						self.pubkey = '';
@@ -107,16 +115,24 @@ export default {
 					});
 				}else{
 					//console.log("default!");
-					this.gun_posts.set(post,function(ack){
+					this.gun_posts.set(post,(ack)=>{
 						//console.log(ack);
 						if(ack.err){
 							self.poststatus = 'Error Post!';
-							self.$message.error({message:'Error Post!',duration:800});
+							//self.$message.error({message:'Error Post!',duration:800});
+							self.$toast.open({
+								message: 'Error Post!',
+								type: 'is-warning'
+							});
 						}
 						if(ack.ok){
 							self.poststatus = 'Posted!';
 							self.bpost = false;
-							self.$message({message:'Posted!',type: 'success',duration:800});
+							//self.$message({message:'Posted!',type: 'success',duration:800});
+							self.$toast.open({
+								message: 'Posted!',
+								type: 'is-success'
+							});
 						}
 					});
 				}

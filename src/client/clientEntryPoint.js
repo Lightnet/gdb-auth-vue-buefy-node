@@ -250,7 +250,14 @@ Vue.use(VueGun, {
 			},
 			handler_logout(){//need to fixed there later...
 				let self = this;
-				console.log("event logout");
+				console.log("event logout >> leave?");
+				console.log(this.$gun);
+				let user = this.$gun.user();
+				console.log(user);
+				user.leave();
+
+				//this.$gun.user().leave();
+				/*
 				this.$gun.user().leave((ack)=>{ 
 					console.log("ack",ack);
 					//console.log("Logout Finish");
@@ -260,9 +267,10 @@ Vue.use(VueGun, {
 						type: 'is-success'
 					});
 				});
-				bus.$emit('action','logout');
+				*/
+				//bus.$emit('action','logout');
 				this.blogin = false;
-				//location.reload();
+				location.reload();
 			}
 		},
 	});

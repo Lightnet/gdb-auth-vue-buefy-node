@@ -14,7 +14,10 @@
 			<center>
 				<b-icon pack="fas" icon="user"></b-icon>
 				Please Login.
-				<span class="icon"><i class="fas exclamation-circle"></i></span>
+				<b-icon
+                	pack="fas"
+                	icon="exclamation-triangle">
+            	</b-icon>
 			</center>
 		</div>
 	</div>

@@ -2,40 +2,40 @@
 	<div id="app">
 		<section>
 
-			<nav class="navbar is-transparent">
+			<nav class="navbar is-primary">
 				<div class="navbar-brand">
-					<a class="navbar-item" href="https://bulma.io">
-					<img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+					<a class="navbar-item" href="#">
+					<img src="https://cdn.glitch.com/c9391fb8-fcc8-4514-ab30-7e896028d056%2Flogoc.png?1526351308640" alt="" width="112" height="28">
 					</a>
-					<div class="navbar-burger burger" @click="toggleMenu" :class="{'is-active': navIsActive}" data-target="navbarTransparent">
+					<div class="navbar-burger burger" v-on:click="toggleMenu" v-bind:class="{ 'is-active': isActive }" data-target="navbarTransparent">
 					<span></span>
 					<span></span>
 					<span></span>
 					</div>
 				</div>
 
-				<div id="navbarTransparent" class="navbar-menu" :class="{'is-active': navIsActive}">
+				<div id="navbarTransparent" class="navbar-menu" @click="handleSelect" v-bind:class="{ 'is-active': isActive }">
 					<div class="navbar-start">
-					<a class="navbar-item is-active" href="#" @click="currentView='home'">
+					<a class="navbar-item" href="#">
 						Home
 					</a>
-					<a class="navbar-item" href="#" @click="currentView='account'">
+					<a class="navbar-item" href="#">
 						Account
 					</a>
-					<a class="navbar-item" href="#" @click="currentView='pm'">
+					<a class="navbar-item" href="#">
 						Messages
 					</a>
-					<a class="navbar-item" href="#" @click="currentView='chat'">
+					<a class="navbar-item" href="#">
 						Chat
 					</a>
-					<a class="navbar-item" href="#" @click="currentView='todolist'">
+					<a class="navbar-item" href="#">
 						To Do List
 					</a>
-					<a class="navbar-item" href="#" @click="currentView='forum'">
+					<a class="navbar-item" href="#">
 						Forum
 					</a>
 
-					<a class="navbar-item" href="#" @click="currentView='prototype'">
+					<a class="navbar-item" href="#">
 						Test
 					</a>
 					<div class="navbar-item has-dropdown is-hoverable">
@@ -112,7 +112,8 @@ export default {
 			//blogin:false,
 			postid:'default',
 			postlistid:'default',
-			navIsActive: false,
+			navIsActive: null,
+			isActive: false,
 		}
 	},
 	watch:{
@@ -137,17 +138,43 @@ export default {
 	},
 	methods: {
 		toggleMenu() {
-			this.navIsActive = !this.navIsActive;
+			this.isActive = !this.isActive;
 			console.log(this);
 			console.log("test");
       	},
-
 		handleSelect(event) {
-			//console.log(key, keyPath);
-			//console.log(key);
-			console.log(event);
-			console.log(event.target.innerText);
-			
+			//console.log(event);			
+			//this.isActive = !this.isActive;
+			if(this.navIsActive !=null){
+				this.navIsActive.classList.remove('is-active');
+			}
+			//console.log(event.target.innerText);
+			event.target.classList.toggle('is-active');
+			//event.toElement.classList.toggle('is-active');
+			this.navIsActive = event.target;
+
+			if(event.target.innerText == 'Home'){
+				this.currentView = 'home'
+			}
+			if(event.target.innerText == 'Forum'){
+				this.currentView = 'forum'
+			}
+			if(event.target.innerText == 'Account'){
+				this.currentView = 'account'
+			}
+			if(event.target.innerText == 'Chat'){
+				this.currentView = 'chat'
+			}
+			if(event.target.innerText == 'Messages'){
+				this.currentView = 'pm'
+			}
+			if(event.target.innerText == 'Test'){
+				this.currentView = 'prototype'
+			}
+
+			if(event.target.innerText == 'To Do List'){
+				this.currentView = 'todolist'
+			}
 			if(event.target.innerText == 'Light'){
 				//require('./element-light.scss');
 				//console.log(document);
@@ -166,7 +193,6 @@ export default {
 			//if(key != ''){
 				//this.currentView = key;
 			//}
-			
       	},
 		updateMessage (message) {
       		// By emitting the 'update' event in every intermediary component we can pass data
