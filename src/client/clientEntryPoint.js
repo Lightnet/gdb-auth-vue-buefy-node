@@ -15,7 +15,10 @@ import VueGun from 'vue-gun';
 import Gun from 'gun';
 import 'gun/sea';
 
+
 //custom chain gun.js
+import 'gun/nts';
+
 import 'gun/lib/path';
 import 'gun/lib/load';
 import 'gun/lib/open';

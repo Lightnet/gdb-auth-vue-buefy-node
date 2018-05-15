@@ -1,13 +1,13 @@
 <template>
 	<div id="app">
-		<section>
 
+		<section>
 			<nav class="navbar is-primary">
 				<div class="navbar-brand">
 					<a class="navbar-item" href="#">
 					<img src="https://cdn.glitch.com/c9391fb8-fcc8-4514-ab30-7e896028d056%2Flogoc.png?1526351308640" alt="" width="112" height="28">
 					</a>
-					<div class="navbar-burger burger" v-on:click="toggleMenu" v-bind:class="{ 'is-active': isActive }" data-target="navbarTransparent">
+					<div class="navbar-burger burger" data-target="navbarTransparent" @click="toggleMenu" v-bind:class="{ 'is-active': isActive }" >
 					<span></span>
 					<span></span>
 					<span></span>
@@ -15,6 +15,7 @@
 				</div>
 
 				<div id="navbarTransparent" class="navbar-menu" @click="handleSelect" v-bind:class="{ 'is-active': isActive }">
+
 					<div class="navbar-start">
 					<a class="navbar-item" href="#">
 						Home
@@ -34,7 +35,6 @@
 					<a class="navbar-item" href="#">
 						Forum
 					</a>
-
 					<a class="navbar-item" href="#">
 						Test
 					</a>
@@ -80,9 +80,36 @@
 				</div>
 				</nav>
 		</section>
+
 		<div class="container">
 			<component :is="currentView" ></component>
 		</div>
+
+		<nav class="navbar is-fixed-bottom">
+			<div class="navbar-brand">
+				<div class="navbar-burger burger" data-target="navbarBottom" @click="toggleMenu" v-bind:class="{ 'is-active': isActive }" >
+				<span></span>
+				<span></span>
+				<span></span>
+				</div>
+			</div>
+
+			<div id="navbarBottom" class="navbar-menu" @click="handleSelect" v-bind:class="{ 'is-active': isActive }">
+				<div class="navbar-start">
+					<a class="navbar-item" href="#">
+						Home
+					</a>
+				</div>
+				<div class="navbar-end">
+					<div class="navbar-item">
+						{{guntime}}
+					</div>
+				</div>
+			</div>
+		</nav>
+
+
+
 	</div>
 </template>
 
@@ -114,6 +141,8 @@ export default {
 			postlistid:'default',
 			navIsActive: null,
 			isActive: false,
+			timer: '',
+			guntime:'',
 		}
 	},
 	watch:{
@@ -123,6 +152,8 @@ export default {
 		this.$on('update:username',(event)=>{
 			console.log("data child?");
 		});
+		this.timeEvent();
+		this.timer = setInterval(this.timeEvent, 1000)
 		//document.querySelector('body').classList.add("dark");
 	},
 	components: {
@@ -131,16 +162,23 @@ export default {
 		'create-post': createtemplate,
 		'todolist':toDoListTemplate,
 		'account':accountTemplate,
-		//'messagebox':MessageBoxTemplate,
 		'chat':chatTemplate,
 		'pm':MsgBoxTemplate,
 		'prototype':PrototypeTemplate,
 	},
 	methods: {
-		toggleMenu() {
+		timeEvent(){
+			let time = new Date(Gun.state());
+			this.guntime = time.toLocaleString() +' '+ (time.getMilliseconds()/1000).toFixed(3).slice(1);
+			//console.log(this.guntime);
+		},
+		cancelAutoTime(){ 
+			clearInterval(this.timer);
+		},
+		toggleMenu(){
 			this.isActive = !this.isActive;
-			console.log(this);
-			console.log("test");
+			//console.log(this);
+			//console.log("test");
       	},
 		handleSelect(event) {
 			//console.log(event);			
@@ -198,7 +236,12 @@ export default {
       		// By emitting the 'update' event in every intermediary component we can pass data
       		// from GrandchildComponent to ChildComponent and from there to the parent
       		this.$emit('update', message)
-    	}
+		}
+		
+		
+	},
+	beforeDestroy() {
+  		clearInterval(this.timer);
 	}
 }
 </script>
