@@ -1,16 +1,19 @@
 <template id="Account">
 	<div>
 		<div v-if="blogin">
+			<DatabaseOptions></DatabaseOptions>
+			<!--
 			<button class="button" v-on:click="cleardata">Clear Local Database</button>
 			<button class="button" v-on:click="Connect">Connect</button>
 			<button class="button" v-on:click="Disconnect">Disconnect</button>
+			-->
 		</div>
 
 		<div v-if="!blogin">
 			<button class="button is-primary"  style="float: right;" v-on:click="click_logout()">Logout</button>
 			<button class="button" v-on:click="setview('profile')">Profile</button>
 			<button class="button" v-on:click="setview('contacts')">Contacts</button>
-			<button class="button" v-on:click="setview('options')">Options</button>
+			<button class="button" v-on:click="setview('options')">Settings</button>
 			<button class="button" v-on:click="Disconnect">Disconnect</button>
 		</div>
 
@@ -28,6 +31,8 @@ import logintemplate from './account/login-template.vue';
 import profiletemplate from './account/profile-template.vue';
 import contactstemplate from './account/contacts-template.vue';
 import profileoptionstemplate from './account/profile-options-template.vue';
+
+import DatabaseOptions from './helpers/DataBaseOptions-template.vue';
 
 export default {
 	//props:['blogin','username'],
@@ -180,6 +185,7 @@ export default {
 		'profile':profiletemplate,
 		'contacts':contactstemplate,
 		'options':profileoptionstemplate,
+		DatabaseOptions,
 	}
 }
 </script>

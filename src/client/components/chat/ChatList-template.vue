@@ -1,8 +1,9 @@
 <template>
 	<div class="field is-grouped is-grouped-left">
 		<p class="control">
+			<b-field>
 			<b-select placeholder="Select a Chat" v-model="chatroomid" v-on:input="$emit('chatroomselect',chatroomid)">
-				<option  
+				<option
 					v-for="chatroom in chatrooms" 
 					:key="chatroom.id" 
 					:value="chatroom.id"
@@ -14,6 +15,7 @@
 				<option>Test2</option>
 				-->
 			</b-select>
+			</b-field>
 		</p>
 		<p class="control">
 			<label class="button is-text"> Unknown chat </label>

@@ -31,10 +31,14 @@
 			</b-field>
 		</section>
 
+		<DatabaseOptions></DatabaseOptions>
+
     </div>
 </template>
 <script>
-import bus from '../../bus';
+//import bus from '../../bus';
+
+import DatabaseOptions from '../helpers/DataBaseOptions-template.vue';
 
 export default {
 	//props:['var'],
@@ -48,7 +52,10 @@ export default {
 			bchangepassword:false,
 			bhintpassword:false,
 		}
-    },
+	},
+	components:{
+		DatabaseOptions,
+	},
     async created(){
 		if(Gun.SEA == null){
 			Gun.SEA = SEA;

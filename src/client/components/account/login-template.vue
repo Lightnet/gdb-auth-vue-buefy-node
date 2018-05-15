@@ -8,8 +8,14 @@
 				<b-input placeholder="password" v-model="passphrase" style="width:300px;"></b-input>
 			</b-field>
 			<b-field grouped>
-				<button class="button is-primary" size="mini" v-on:click="loginclick()">Login</button>
-				<button class="button" v-on:click="siginupclick()">Sign Up</button>
+				<button class="button is-primary" size="mini" v-on:click="loginclick()">
+					<b-icon pack="fas" icon="user"></b-icon>
+					<span>Login</span>
+				</button>
+				<button class="button" v-on:click="siginupclick()">
+					<b-icon pack="fas" icon="user"></b-icon>
+					<span>Sign Up</span>
+				</button>
 				<a class="button is-text" href="#" v-on:click="bforgetpassword=true">Forgot Password?</a>
 			</b-field>
 		</section>

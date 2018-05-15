@@ -87,14 +87,14 @@
 
 		<nav class="navbar is-fixed-bottom">
 			<div class="navbar-brand">
-				<div class="navbar-burger burger" data-target="navbarBottom" @click="toggleMenu" v-bind:class="{ 'is-active': isActive }" >
+				<div class="navbar-burger burger" data-target="navbarBottom" @click="toggleMenuBottom" v-bind:class="{ 'is-active': isActiveb }" >
 				<span></span>
 				<span></span>
 				<span></span>
 				</div>
 			</div>
 
-			<div id="navbarBottom" class="navbar-menu" @click="handleSelect" v-bind:class="{ 'is-active': isActive }">
+			<div id="navbarBottom" class="navbar-menu" @click="handleSelectb" v-bind:class="{ 'is-active': isActiveb }">
 				<div class="navbar-start">
 					<a class="navbar-item" href="#">
 						Home
@@ -140,7 +140,9 @@ export default {
 			postid:'default',
 			postlistid:'default',
 			navIsActive: null,
+			navIsActiveb: null,
 			isActive: false,
+			isActiveb: false,
 			timer: '',
 			guntime:'',
 		}
@@ -168,19 +170,34 @@ export default {
 	},
 	methods: {
 		timeEvent(){
+			//get gun time
 			let time = new Date(Gun.state());
+			//string clock time and Milliseconds time
 			this.guntime = time.toLocaleString() +' '+ (time.getMilliseconds()/1000).toFixed(3).slice(1);
 			//console.log(this.guntime);
 		},
 		cancelAutoTime(){ 
 			clearInterval(this.timer);
 		},
-		toggleMenu(){
-			this.isActive = !this.isActive;
+		toggleMenuBottom(){//nav bar toggle active
+			this.isActiveb = !this.isActiveb;
 			//console.log(this);
 			//console.log("test");
       	},
-		handleSelect(event) {
+		toggleMenu(){//nav bar toggle active
+			this.isActive = !this.isActive;
+			//console.log(this);
+			//console.log("test");
+		},
+		handleSelectb(event) {//nav link/button toggle active
+			if(this.navIsActive !=null){
+				this.navIsActiveb.classList.remove('is-active');
+			}
+			event.target.classList.toggle('is-active');
+			this.navIsActiveb = event.target;
+
+		},
+		handleSelect(event) {//nav link/button toggle active
 			//console.log(event);			
 			//this.isActive = !this.isActive;
 			if(this.navIsActive !=null){
