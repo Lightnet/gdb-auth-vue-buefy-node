@@ -60,7 +60,7 @@ export default {
 	props:[],
 	data() {
 		return{
-			bdisplaydatabase:true,
+			bdisplaydatabase:false,
 			peers:[],
 			peerselect:null,
 			newgunpeer:'',

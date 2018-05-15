@@ -50,7 +50,7 @@ export default {
 	data() {
 		return{
 			//bchatlistselect:false,
-			chatroomid:'',
+			chatroomid:null,
 		}
 	},
 	components: {

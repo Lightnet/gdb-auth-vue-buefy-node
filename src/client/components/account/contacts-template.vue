@@ -214,29 +214,25 @@ export default {
 			let self = this;
 			//CKLj2fswWfmJKiSVHEhNCWQh-c9bHBWgh3I45lm3OJo.Flq2KgGaAOqptA09C8L_msnh4uu6NTZgKQuVswebKoE
 
-			this.$confirm('This will permanently delete the '+ event.alias  + '. Continue?', 'Warning', {
-				confirmButtonText: 'OK',
-				cancelButtonText: 'Cancel',
-				type: 'warning'
-			}).then(() => {
 
-				this.$message({
-					type: 'success',
-					message: 'Delete completed'
-				});
+			this.$dialog.confirm({
+				message: 'This will permanently delete the '+ event.alias  + '. Continue?',
+				onConfirm:(value)=>{
+					this.$toast.open({message:'Delete completed!',type:'is-success'});
 
-				self.contacts = self.contacts.filter(contact => {
-					if(contact.id == event.id){
-						user.get('contacts').get(contact.id).put('null');
-					}
-					return contact.id !== event.id;
-				});
-			}).catch(() => {
-				this.$message({
-					type: 'info',
-					message: 'Delete canceled'
-				});          
+					self.contacts = self.contacts.filter(contact => {
+						if(contact.id == event.id){
+							user.get('contacts').get(contact.id).put('null');
+						}
+						return contact.id !== event.id;
+					});
+
+				},
+				onCancel:()=>{
+					this.$toast.open({message:'Cancel Delete!',type:'is-warning'});
+				}
 			});
+
 		},
     },
 	beforeDestroy() {

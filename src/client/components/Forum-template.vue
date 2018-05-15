@@ -5,7 +5,7 @@
 				:posts="posts" 
 				@newpost="replypost_click" 
 				@topicedit="topic_edit" 
-				@topicdelete="topic_delete"
+				@topicdelete="action_deletetopic"
 				@topicchange="topic_editchange"
 				@topicview="viewpost"
 			></topiccategory>
@@ -143,6 +143,20 @@ export default {
 			//console.log("topic_edit:",this.bedit);
 			//console.log(this);
 			post.bedit = !post.bedit;
+		},
+		action_deletetopic(event){
+			//console.log(event);
+			this.$dialog.confirm({
+				message: 'Topic Delete ' + event.text + '?',
+				onConfirm:(value)=>{
+					this.$toast.open({message:'Delete Topic! ' + event.text ,type:'is-success'});
+
+					this.topic_delete(event);
+				},
+				onCancel:()=>{
+					this.$toast.open({message:'Cancel Delete!',type:'is-warning'});
+				}
+			});
 		},
 		topic_delete(event){
 			//console.log("topic_delete:",idToRemove);

@@ -44,7 +44,7 @@ export default {
 		return {
 			bforumlistselect:false,
 			//forums:[],
-			forumid:'',
+			forumid:null,
 		}
 	},
 	created(){

@@ -25,8 +25,10 @@
 
 		<label class="is-text" v-if="bhint"> Please go to options for Forgot Password to setup hint. </label>
 
-		<br><b-switch v-model="bprofileinfo">Profile Information</b-switch>
-
+		<br>
+		<div class="field">
+		<b-switch v-model="bprofileinfo">Profile Information</b-switch>
+		</div>
 		<section v-if="bprofileinfo">
 			<b-field>
 				<label class="button is-text">Alias</label>
@@ -90,7 +92,7 @@ export default {
 			pubborn:'',
 			pubeducation:'',
 			pubskills:'',
-			bprofileinfo:false,
+			bprofileinfo:true,
 			bhint:false,
 		}
     },
@@ -126,9 +128,9 @@ export default {
 			//alert("Copied the text: " + copyText.value);
 			//this.$message({message:'Public Key Copy:' + copyText.value ,type: 'success',duration:800});
 			this.$toast.open({
-						message: 'Public Key Copy:' + copyText.value,
-						type: 'is-success'
-					});
+				message: 'Public Key Copy:' + copyText.value,
+				type: 'is-success'
+			});
 		},
 		updateprofiledata(value,key){
 			//console.log(value);
@@ -140,61 +142,45 @@ export default {
 			});
 		},
 		async access_pubkey(event){
-			//console.log(event);
-			//console.log("test");
-			this.$prompt('Alias Public Key:', 'Tip', {
-				confirmButtonText: 'OK',
-				cancelButtonText: 'Cancel',
-			}).then(event => {
-				//console.log(event.value);
-
-				var pub = (event.value || '').trim();
-
-				if(!pub) {
-					this.$message('Empty!');
-					return 
-				}
-
-				var to = this.$root.$gun.user(pub);
-				;(async () => {
-					var who = await to.get('alias').then();
-
-					if(!who) {
-						this.$message({
-							type: 'warning',
-							message: 'Public key fail!'
-						});
+			this.$dialog.prompt({
+				message: 'Alias Public Key:',
+				inputAttrs: {
+					placeholder: 'e.g. xxx_xxxx.xxx'
+				},
+				onConfirm:(value)=>{
+					//console.log('value:',value);
+					//this.$toast.open(`Your name is: ${value}`);
+					var pub = (value || '').trim();
+					if(!pub) {
+						this.$toast.open('Empty!');
 						return;
 					}
-					//console.log(who);
-					this.grantaccess_user(who,to);
-				})();
-				
-			}).catch(() => {
-          		this.$message({
-            		type: 'info',
-            		message: 'Alias Public key canceled!'
-          		});       
-        	});
+					var to = this.$root.$gun.user(pub);
+					;(async () => {
+						var who = await to.get('alias').then();
+						if(!who) {
+							//this.$message({
+								//type: 'warning',
+								//message: 'Public key fail!'
+							//});
+							this.$toast.open({message:'Public key fail!',type:'is-warning'});
+							return;
+						}
+						//console.log(who);
+						this.grantaccess_user(who,to);
+					})();
+				}
+			});
 		},
 		grantaccess_user(who,to){
-			this.$confirm('Grant access Alias to ' + who + '?', 'Tip', {
-				confirmButtonText: 'OK',
-				cancelButtonText: 'Cancel',
-				type: 'warning',
-			}).then(event2 => {
-
-				//user.get('profile').get(event).grant(to);
-				this.$message({
-					type: 'success',
-					message: 'Grant completed'
-				});
-
-			}).catch(() => {
-				this.$message({
-					type: 'info',
-					message: 'Grant canceled!'
-				});       
+			this.$dialog.confirm({
+				message: 'Grant access Alias to ' + who + '?',
+				onConfirm:(value)=>{
+					this.$toast.open({message:'Access Grant!',type:'is-success'});
+				},
+				onCancel:()=>{
+					this.$toast.open({message:'Cancel Access!',type:'is-warning'});
+				}
 			});
 		}
     },

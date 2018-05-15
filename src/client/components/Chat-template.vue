@@ -1,8 +1,10 @@
 <template>
 	<div>
 		<div v-if="blogin">
+			<div class="field">
 			<label>Chat Room:(Not public yet!)</label>
 			<b-switch v-model="bchatlistselect">Chat Room List</b-switch>
+			</div>
 			<div v-if="bchatlistselect">
 				<ChatList
 					:chatrooms="chatrooms"

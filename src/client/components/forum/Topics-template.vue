@@ -1,21 +1,41 @@
 <template>
 	<div>
 		<div id="topicscroll" style="overflow:auto;">
-			<el-card class="box-card" v-for="topic in mtopics" :key="topic.id">
-				<div slot="header" class="clearfix">User: {{topic.alias}}  | Title: {{ topic.posttitle }}</div>
-				
-				<el-main>
-				<span v-if="!topic.bedit" class="wrap">{{ topic.content }}</span>
-				<textarea v-if="topic.bedit" v-model="topic.content"></textarea>
-
-				<span v-if="!topic.isParent" style="float: right; padding: 3px 0">
-					<button type="primary" icon="el-icon-edit" v-on:click="topic_edit(topic)" circle></button>
-					<button type="danger" icon="el-icon-delete" @click="topic_delete(topic)" circle></button>
-        		</span></el-main>
-				<el-footer> Date: {{ topic.postdate }}</el-footer>
-			</el-card>
+			<article class="media" v-for="topic in mtopics" :key="topic.id">
+				<figure class="media-left">
+					<p class="image is-64x64">
+					<img src="https://bulma.io/images/placeholders/128x128.png">
+					</p>
+				</figure>
+				<div class="media-content">
+    				<div class="content">
+						<p>
+							<strong>User: {{topic.alias}} | Title: {{ topic.posttitle }} </strong>
+							<br>
+							<span v-if="!topic.bedit" class="wrap">{{ topic.content }}</span>
+							<textarea v-if="topic.bedit" v-model="topic.content"></textarea>
+							<br>
+							Date: {{ topic.postdate }}
+						</p>
+					</div>
+				</div>
+				<div class="media-right" v-if="topic.isparent==false">
+					<button class="button is-primary" icon="el-icon-edit" v-on:click="topic_edit(topic)">
+						<b-icon
+							pack="fas"
+							icon="edit">
+						</b-icon>
+					</button>
+					<button class="button is-danger" icon="el-icon-delete" @click="action_deletetopicpost(topic)">
+						<b-icon
+							pack="fas"
+							icon="trash">
+						</b-icon>
+					</button>
+				</div>
+			</article>
 		</div>
-		<button type="primary" size="mini" v-if="!bpost" v-on:click="replypost_click"> Reply Topic </button>
+		<button class="button is-primary" size="mini" v-if="!bpost" v-on:click="replypost_click"> Reply Topic </button>
     </div>
 </template>
 <script>
@@ -59,6 +79,20 @@ export default {
 			//console.log("topic_edit:",this.bedit);
 			//console.log(this);
 			post.bedit = !post.bedit;
+		},
+		action_deletetopicpost(event){
+			console.log(event);
+			this.$dialog.confirm({
+				message: 'Topic Delete ' + event.posttitle + '?',
+				onConfirm:(value)=>{
+					this.$toast.open({message:'Delete Topic! ' + event.posttitle ,type:'is-success'});
+
+					this.topic_delete(event);
+				},
+				onCancel:()=>{
+					this.$toast.open({message:'Cancel Delete!',type:'is-warning'});
+				}
+			});
 		},
 		topic_delete(event){
 			//console.log("topic_delete:",idToRemove);

@@ -53,7 +53,7 @@ export default {
 			sendercontent:'test content',
 			pubkeystatus:'Normal',
 			messagescrollid:'messagescroll',
-			bwritemessage:true,
+			bwritemessage:false,
         }
     },
     watch: {
