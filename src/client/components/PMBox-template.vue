@@ -19,9 +19,7 @@
 				@messagelist="bviewmessage=false"
 			>
 			</PMView>
-
-
-
+			
 		</div>
 		<div v-else>
 			<br>
