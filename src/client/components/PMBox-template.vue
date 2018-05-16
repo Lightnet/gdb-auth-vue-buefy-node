@@ -1,15 +1,27 @@
 <template>
     <div>
 		<div v-if="blogin">
-			<PM
+			<PM v-if="!bviewmessage"
                 @selectcontact="selectcontact"
 			></PM>
 
             <PMList
+				v-if="!bviewmessage"
 				:aliasid="aliasid"
                 :messages="messages"
 				@deletemessage="action_deletemessage"
+				@viewmessage="viewmessage"
             ></PMList>
+
+			<PMView 
+				v-if="bviewmessage"
+				:messagedata="messagedata"
+				@messagelist="bviewmessage=false"
+			>
+			</PMView>
+
+
+
 		</div>
 		<div v-else>
 			<br>
@@ -29,11 +41,13 @@
 
 import PM from './msgbox/PM.vue';
 import PMList from './msgbox/PMList.vue';
+import PMView from './msgbox/PMView.vue';
 
 export default {
     components:{
         PM,
-        PMList
+		PMList,
+		PMView
     },
     data(){
         return{
@@ -41,6 +55,8 @@ export default {
             pubkey:'',
 			messages:[],
 			aliasid:'',
+			bviewmessage:false,
+			messagedata:[],
         }
     },
     created(){
@@ -123,12 +139,11 @@ export default {
 			//console.log('USER PUB: ' , user.pair().pub);
 			if(event.owner == pub){
 				//console.log("from user to alias");
-				user.get('messages').get(pub).get(event.id).once((data,id)=>{
+				//user.get('messages').get(pub).get(event.id).once((data,id)=>{
 					//console.log('user to pub',id);
 					//gun.get(id).put(null);
-					console.log(data);
-
-				});
+					//console.log(data);
+				//});
 				user.get('messages').get(pub).get(event.id).put('null',(ack)=>{
 					console.log(ack);
 					if(ack.ok){
@@ -142,15 +157,20 @@ export default {
 			//can't delete message
 			if(event.owner == user.pair().pub){
 				//console.log("from alias to user");
-				//to.get('messages').get(user.pair().pub).get(event.id).once((data,id)=>{
-					//console.log(data);
-				//});
-				//to.get('messages').get(user.pair().pub).get(event.id).put('null');
+				
 				to.get('messages').get(user.pair().pub).map().once(data=>{
 					console.log('data',data);
-				})
+				});
+
+				//to.get('messages').get(user.pair().pub).get(event.id).put('null');
 			}
-		}
+		},
+		viewmessage(event){
+			this.messagedata = event;
+			console.log('view message');
+			this.bviewmessage = true;
+		},
+
     },
 }
 </script>

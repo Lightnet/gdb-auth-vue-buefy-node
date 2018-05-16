@@ -39,7 +39,7 @@
 				<p class="control">
                 	<span class="button is-static">/gun</span>
             	</p>
-				<button class="button is-primary">
+				<button class="button is-primary" @click="checkPeerUrl">
 					<span>Add</span>
 					<b-icon pack="fas" icon="server"></b-icon>
 				</button>
@@ -132,6 +132,12 @@ export default {
 				type: 'is-success'
 			})
 		},
+		checkPeerUrl(){
+			let gun =this.$root.$gun;
+			console.log(gun);
+
+			//gun._.opt.peers.push();
+		}
     },
 }
 </script>

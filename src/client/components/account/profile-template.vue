@@ -92,7 +92,7 @@ export default {
 			pubborn:'',
 			pubeducation:'',
 			pubskills:'',
-			bprofileinfo:true,
+			bprofileinfo:false,
 			bhint:false,
 		}
     },

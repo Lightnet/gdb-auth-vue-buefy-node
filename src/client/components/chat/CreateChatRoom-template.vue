@@ -1,6 +1,6 @@
 <template>
 	<div>
-        Create Forum
+        Create Chat Room
     </div>
 </template>
 <script>

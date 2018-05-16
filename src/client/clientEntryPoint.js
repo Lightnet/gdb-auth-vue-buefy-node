@@ -191,7 +191,7 @@ Vue.use(VueGun, {
 				//let blogin = false;
 				let self = this;
 
-				this.user.auth(params.username, params.passphrase,function(ack){
+				this.user.auth(params.username, params.passphrase,(ack)=>{
 					//console.log(ack);
 					if(ack.err){
 						//console.log("fail!");
@@ -207,8 +207,7 @@ Vue.use(VueGun, {
 							message: 'Authorized!',
 							type: 'is-success'
 						});
-
-
+						bus.$emit('login');
 						bus.$emit('action','hidelogin');
 				}
 				//console.log("test?");

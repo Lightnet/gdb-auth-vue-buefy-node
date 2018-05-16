@@ -113,6 +113,7 @@
 
 <script>
 import Vue from 'vue';
+import bus from "./bus.js";
 import hometemplate from './components/Home-template.vue';
 import forumtemplate from './components/Forum-template.vue';
 import createtemplate from './components/forum/CreateTopic-template.vue';
@@ -149,8 +150,13 @@ export default {
 
 	},
 	created(){
-		this.$on('update:username',(event)=>{
+		//this.$on('update:username',(event)=>{
+			//console.log("data child?");
+		//});
+
+		bus.$on('login',(event)=>{
 			console.log("data child?");
+			this.updateProfileInfo();
 		});
 
 		//this.username = this.$root.$gun.user().is.alias;
@@ -175,12 +181,16 @@ export default {
 			//string clock time and Milliseconds time
 			this.guntime = time.toLocaleString() +' '+ (time.getMilliseconds()/1000).toFixed(3).slice(1);
 			//console.log(this.guntime);
-			if(!this.$root.$gun.user().is)
-				return;
-			let user = this.$root.$gun.user().is.alias;;
-			if(user){
-				this.username = user + ' [pub:] ' + this.$root.$gun.user().is.pub;
-			}
+			//if(!this.$root.$gun.user().is)
+				//return;
+			//let user = this.$root.$gun.user().is.alias;
+			//if(user){
+				//this.username = user + ' [pub:] ' + this.$root.$gun.user().is.pub;
+			//}
+		},
+		updateProfileInfo(){
+			let user = this.$root.$gun.user().is;
+			this.username = user.alias + ' Pub: ' + user.pub;
 		},
 		cancelAutoTime(){ 
 			clearInterval(this.timer);
@@ -197,9 +207,13 @@ export default {
 		},
 		handleSelectb(event) {//nav link/button toggle active
 			if(this.navIsActive !=null){
+				if(!this.navIsActiveb)
+					return;
 				this.navIsActiveb.classList.remove('is-active');
 			}
 			//console.log(event.target);
+			if(!event.target.classList)
+				return;
 
 			event.target.classList.toggle('is-active');
 			this.navIsActiveb = event.target;

@@ -4,8 +4,8 @@
             <label class="label is-text">Messages:</label>
             <div class="card" v-for="message in messages" :key="message.id">
                 <div>
-                <label class="button is-text">From: {{ message.from }} </label>
-                <label class="button is-text"> {{ message.message }} </label>
+                <label class="button is-text" @click="$emit('viewmessage',message)">From: {{ message.from }} </label>
+                <label class="button is-text" @click="$emit('viewmessage',message)"> {{ message.subject }} </label>
 
                 <a class="icon" style="float: right;" v-if="aliasid!=message.owner" v-on:click="$emit('deletemessage',message)">
                     <b-icon
