@@ -2,11 +2,11 @@
 	<div>
 		<div class="field is-grouped is-grouped-left">
 			<p class="control">
-				<b-select placeholder="Select a Forum" v-model="forumid" v-on:input="$emit('forumidselect',forumid)">
+				<b-select placeholder="Select a Forum" v-model="forumdata" v-on:input="$emit('forumselect',forumdata)">
 					<option  
 					v-for="forum in forums" 
 					:key="forum.id" 
-					:value="forum.id"
+					:value="forum"
 					>
 					{{forum.name}}
 					</option>
@@ -17,15 +17,15 @@
 				</b-select>
 			</p>
 			<p class="control">
-				<label class="button is-text"> Unknown forum </label> 
 				<button class="button">Remove</button>
 			</p>
 			<p class="control">
-				<b-input style="width:200px;"> </b-input>
+				<b-input style="width:200px;" v-model="forumid"> </b-input>
 			</p>
 
 			<p class="control is-expanded">
 				<button  class="button">Add</button>
+				<label class="button is-text"> Status: {{forumstatus}} </label> 
 			</p>
 			
 			<p class="control">
@@ -47,7 +47,21 @@ export default {
 			bforumlistselect:true,
 			//forums:[],
 			forumid:null,
+			forumdata:null,
+			forumstatus:'None',
 		}
+	},
+	watch:{
+		forumdata(val) {
+			//console.log(n, o) // n is the new value, o is the old value.
+			this.forumid = this.forumdata.key;
+			//this.chatroomname= this.forumdata.name;
+		},
+		forumid(newvalue){
+			//console.log("new string?");
+			this.forumstatus = 'typing...';
+			this.TypingcheckForumID();
+		},
 	},
 	created(){
 		let gun = this.$root.user;
@@ -55,6 +69,30 @@ export default {
 		this.updateForumList();
 	},
 	methods:{
+		TypingcheckForumID:_.debounce(//typing key checks pub key string
+			async function(){
+				//console.log(this.pubkey.length);
+				if(this.forumid.length == 32){
+					this.CheckForumID();
+				}else{
+					this.forumstatus = 'Not public key!'
+				}
+			}
+
+		,500)
+		,
+		CheckForumID(){
+			let gun = this.$root.$gun;
+			let self = this;
+			gun.get(this.forumid).once(data=>{
+				console.log('test',data);
+				if(data !=null){
+					self.forumstatus = "Found";
+				}else{
+					self.forumstatus = "Null";
+				}
+			});
+		},
 		actionCreateForum(){
 			bus.$emit('view','createforum');
 		},

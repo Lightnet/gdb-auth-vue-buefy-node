@@ -1,13 +1,18 @@
 <template>
 	<div>
 		<div v-if="blogin">
-			<div class="field">
-			<label>Chat Room:</label>
-			<b-switch v-model="bchatlistselect">Chat Room List</b-switch>
-			</div>
+			<b-field>
+				<p class="control is-expanded">
+					<label class="label">Chat Room: {{chatroomname}}</label>
+				</p>
+				<p class="control">
+					<b-switch v-model="bchatlistselect">Chat Room List</b-switch>
+				</p>
+			</b-field>
 			<div v-if="bchatlistselect">
 				<ChatList
 					:chatrooms="chatrooms"
+					:chatdata="chatdata"
 					@chatroomselect="chatroomselect"
 				></ChatList>
 			</div>
@@ -52,15 +57,14 @@ export default {
 	//props:['blogin'],
 	data() {
 		return{
-			bchatlistselect:true,
+			bchatlistselect:false,
 			blogin:false,
 			messages:[],
 			chatmessage:'test message',
 			chatdata:null,
+			chatroomname:'Null',
 			chatrooms:[
 				//{id:'233w45',name:'test'},
-				//{id:'232345',name:'test2'},
-				//{id:'2s2345',name:'test3'},
 			],
 		}
 	},
@@ -107,12 +111,12 @@ export default {
 			console.log(event);
 			let user = this.$root.$gun.user();
 			this.messages = [];
-			console.log('clear message');
+			//console.log('clear message');
 			//console.log(event);
 			this.chatdata = event;
-
-			
+			this.chatroomname = event.name;
 			this.updateChatMessages();
+			this.bchatlistselect = false;
 		},
 		handleResize(event){
 			if(!document.getElementById(this.chatidhandle))

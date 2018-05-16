@@ -39,11 +39,12 @@
 import bus from '../../bus';
 
 export default {
-	props:['chatrooms'],
+	props:['chatrooms','chatdata'],
 	data() {
 		return{
 			chatroomdata:[],
 			chatroomid:'',
+			chatroomname:'',
 			chatstatus:'None',
 		}
 	},
@@ -54,6 +55,7 @@ export default {
 		chatroomdata(val) {
 			//console.log(n, o) // n is the new value, o is the old value.
 			this.chatroomid = this.chatroomdata.key;
+			this.chatroomname= this.chatroomdata.name;
 		},
 		chatroomid(newvalue){
 			//console.log("new string?");

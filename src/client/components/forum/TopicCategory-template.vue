@@ -1,22 +1,7 @@
 <template>
 	<div>
-		<div class="field is-grouped">
-			<p class="control">
-				<button class="button is-primary" @click="$emit('newpost')">New Topic</button>
-			</p>
-			<p class="control">
-				<b-switch v-model="bforumlistselect">Forum List</b-switch>
-			</p>
-		</div>
-		<div v-if="bforumlistselect">
-			<ForumList
-				:forums="forumlist"
-			></ForumList>
-		</div>
-
 		<div id="topicscroll" style="overflow-y:scroll;">
 			<div class="card" v-for="post in posts" :key="post.id" href="#">
-
 				<div class="card-content">
 					<div class="field is-grouped is-grouped-left">
 						<p class="control is-expanded">
@@ -46,21 +31,18 @@
 <script>
 import bus from '../../bus';
 
-import ForumList from './ForumList.vue';
-
 export default {
 	components: {
-		'ForumList':ForumList
+		//'ForumList':ForumList
 	},
-	props:['posts','topicpubkey'],
+	props:['posts','topicpubkey','forumdata'],
 	data() {
 		return{
 			topicidhandle:'topicscroll',
-			bforumlistselect:false,
-			forumlist:[
-				{id:'testsdf',name:'test'},
-				{id:'testddf',name:'test2'},
-			],
+			//forumlist:[
+				//{id:'testsdf',name:'test'},
+				//{id:'testddf',name:'test2'},
+			//],
 			//bpost:false,
 			//mtopics: this.topics,
 		}

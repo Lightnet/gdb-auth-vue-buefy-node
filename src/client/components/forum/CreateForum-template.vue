@@ -39,7 +39,7 @@ export default {
 	data() {
 		return{
 			forumaccess:'public',
-			forumname:'',
+			forumname:'Test',
 		}
     },
     created(){
@@ -50,9 +50,36 @@ export default {
 			bus.$emit('view','forum');	
 		},
 		createForum(){
+			let gun = this.$root.$gun;
+			let user = gun.user();
+			
+			let texthash = Gun.text.random(32);
+			//console.log(texthash);
+			user.get('forumlist').set({name:this.forumname,access:'public',key:texthash,own:user.is.alias,pub:user.is.pub},(ack)=>{
+				console.log(ack);
+				if(ack.err){
+					console.log("err");
+					return;
+				}
+				if(ack.ok){
+					console.log("pass");
+					self.$toast.open({
+						message: 'Forum' + this.forumname +' Created!',
+						type: 'is-success'
+					});
+				}
+			});
+			
+			gun.get(texthash).put({
+				name:this.forumname,
+				access:'public',
+				own:user.is.alias,
+				pub:user.is.pub
+			});
+
+
 
 		},
-		
     },
 }
 </script>

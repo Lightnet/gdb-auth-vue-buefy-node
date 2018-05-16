@@ -49,7 +49,7 @@ export default {
 	created(){
 		let gun = this.$root.user;
 		//let gun = this.$root.$gun;
-		this.gun_posts = gun.get('posts');
+		//this.gun_posts = gun.get('posts');
 
 		this.pubkey = this.$root.publickeypost;
 	},
@@ -84,9 +84,33 @@ export default {
 					posttitle:this.topictitle,
 					postcontent:this.topiccontent,
 					postdate: timestamp,
+					parent:'default',
 				}
 				//this.gun_posts.get("pulbic/"+user.pub).set(post);
 
+				let gun = this.$root.$gun;
+				let forumdata = this.$root.forumdata;
+				console.log(forumdata);
+				if(forumdata.access == 'public'){
+					gun.get(forumdata.key).get('topic').set(post,ack=>{
+						if(ack.err){
+							console.log('error!');
+							return;
+						}
+						console.log(ack);
+						if(ack.ok){
+							self.$toast.open({
+								message: 'Posted!',
+								type: 'is-success'
+							});
+						}
+					});
+
+					self.pubkey = '';
+					self.$root.publickeypost = '';
+				}
+
+				/*
 				if(this.pubkey){
 					//console.log("keyfound!");
 					let gun = this.$root.user;
@@ -136,6 +160,7 @@ export default {
 						}
 					});
 				}
+				*/
 			}
 
 			//this.bpost = false;

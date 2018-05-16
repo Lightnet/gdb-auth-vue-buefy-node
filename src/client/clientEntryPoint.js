@@ -148,6 +148,7 @@ Vue.use(VueGun, {
 		data: {
 			blogin: false,
 			publickeypost:'',
+			forumdata:[],
 		},
 		created:function(){
 			this.user = this.$gun.user();

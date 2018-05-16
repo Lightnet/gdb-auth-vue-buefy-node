@@ -27,6 +27,14 @@ onHomePageFeedRoute(){
 
 gun.get("@username").time(notificationObject)
 
+tg.time( (data, key, time) => {
+    /*console.log(data); //This Gives me {"#":"Rand0mVa1u3"}*/
+    /*console.log(key); //This Gives me just "Rand0mVa1u3"*/
+    /*console.log(time); //gives a timestamp*/
+    gun.get(Gun.val.rel.is(data)).once((data) => { /*Attempt to retrive the data*/
+        console.log(data);
+    });
+} );
 
 
 
