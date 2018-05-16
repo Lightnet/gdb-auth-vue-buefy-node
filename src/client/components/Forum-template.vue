@@ -150,7 +150,6 @@ export default {
 				message: 'Topic Delete ' + event.text + '?',
 				onConfirm:(value)=>{
 					this.$toast.open({message:'Delete Topic! ' + event.text ,type:'is-success'});
-
 					this.topic_delete(event);
 				},
 				onCancel:()=>{

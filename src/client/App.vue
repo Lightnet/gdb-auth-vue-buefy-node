@@ -97,7 +97,7 @@
 			<div id="navbarBottom" class="navbar-menu" @click="handleSelectb" v-bind:class="{ 'is-active': isActiveb }">
 				<div class="navbar-start">
 					<a class="navbar-item" href="#">
-						Home
+						User: {{username}}
 					</a>
 				</div>
 				<div class="navbar-end">
@@ -107,8 +107,6 @@
 				</div>
 			</div>
 		</nav>
-
-
 
 	</div>
 </template>
@@ -154,6 +152,8 @@ export default {
 		this.$on('update:username',(event)=>{
 			console.log("data child?");
 		});
+
+		//this.username = this.$root.$gun.user().is.alias;
 		this.timeEvent();
 		this.timer = setInterval(this.timeEvent, 1000)
 		//document.querySelector('body').classList.add("dark");
@@ -175,6 +175,12 @@ export default {
 			//string clock time and Milliseconds time
 			this.guntime = time.toLocaleString() +' '+ (time.getMilliseconds()/1000).toFixed(3).slice(1);
 			//console.log(this.guntime);
+			if(!this.$root.$gun.user().is)
+				return;
+			let user = this.$root.$gun.user().is.alias;;
+			if(user){
+				this.username = user + ' [pub:] ' + this.$root.$gun.user().is.pub;
+			}
 		},
 		cancelAutoTime(){ 
 			clearInterval(this.timer);
@@ -193,6 +199,8 @@ export default {
 			if(this.navIsActive !=null){
 				this.navIsActiveb.classList.remove('is-active');
 			}
+			//console.log(event.target);
+
 			event.target.classList.toggle('is-active');
 			this.navIsActiveb = event.target;
 

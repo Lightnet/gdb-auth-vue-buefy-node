@@ -6,13 +6,15 @@
                 <div>
                 <label class="button is-text">From: {{ message.from }} </label>
                 <label class="button is-text"> {{ message.message }} </label>
-                <a class="icon" style="float: right;" v-on:click="$emit('deletemessage',message)">
+
+                <a class="icon" style="float: right;" v-if="aliasid!=message.owner" v-on:click="$emit('deletemessage',message)">
                     <b-icon
                         pack="fas"
                         icon="trash"
                         >
                     </b-icon>
                 </a>
+
                 </div>
             </div>
         </div>
@@ -21,7 +23,7 @@
 <script>
 // private messsage list from contacts
 export default {
-    props:['messages'],
+    props:['messages','aliasid'],
     data(){
         return{
             messagescrollid:'messagescroll',
