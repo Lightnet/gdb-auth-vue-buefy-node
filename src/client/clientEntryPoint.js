@@ -17,7 +17,9 @@ import 'gun/sea';
 
 
 //custom chain gun.js
+
 import 'gun/nts';
+import 'gun/lib/time';
 
 import 'gun/lib/path';
 import 'gun/lib/load';
@@ -49,16 +51,13 @@ window.SEA = SEA;
 	console.log(proof === check);
 	})();
 	*/
-
 //localhost 8080 , proxy doesn't work for reason when 8080 > 3000
 //var gun = Gun(location.origin + '/gun');
-
 //Gun.on('opt', function(at){
 	//console.log('opt...');
 	//console.log(at);
 	//this.to.next(at); 
 //});
-
 //Gun.on('secure', function(msg){
 	//var yes;
 	/* enforce some rules about data */
@@ -69,7 +68,6 @@ window.SEA = SEA;
 	//console.log('secure');
 	// NOT calling next middleware firewalls the data.
 //});
-
 //Gun.get('node').map().once(function(data){
 	//console.log('data',data);
 //});
@@ -84,43 +82,36 @@ if(location.origin == 'http://localhost:3000'){
 	gun = Gun(location.origin + '/gun');
 	console.log('host gun.js');
 }
-//console.log(peers);
+console.log(gun);
+//gun.get('@').time((data, key, time)=>{ // subscribe to all incoming posts
+	//console.log(data);
+    // data might be a soul that you have to GET, I haven't made `time` be chainable yet
+//}, 99); // grab the last 99 items
 
 //require('./test');
-
 //gun.on('hi', peer => {
 	//console.log('connect peer to',peer);
 //});
-
 //gun.on('bye', function(peer){// peer disconnect.
 	//console.log('disconnected from', peer);
 //});
-
-//console.log(gun);
 //console.log(gun);
 //gun.get('data').once(function(){});//init connection
-
 //gun.on('auth', function(at){
 	//if('sign' === c.hash){ c.hash = '' }
 	//as.route(c.hash || 'people');
 	//console.log('auth');
 //});
-
 //gun.on('secure', function(at){
 	//console.log('secure');
 //});
-
 //var c = window.c = {};
 //c.hash = location.hash.slice(1);
 //console.log("c.hash ",c.hash );
-
 //Gun.on('opt',function(data){
 	//console.log("update:", data);
 //});
-
 //https://stackoverflow.com/questions/49519571/gun-v0-9-92-using-sea-cant-put-nested-data-when-not-logged-in
-
-//console.log(gun);
 //window.onload = function() {
 	//loginuser("test","test");
 	//var user = gun.user();
@@ -141,9 +132,6 @@ if(location.origin == 'http://localhost:3000'){
 Vue.use(VueGun, {
 	gun: gun // must be passed in at `gun` key
 });
-//Vue.use(VueGun, {
-	//peers: ['someurl.com:9000/gun']
-//});
 
 //(function(){
 	//console.log('hello world :o');

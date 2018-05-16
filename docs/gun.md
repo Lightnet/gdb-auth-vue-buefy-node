@@ -25,6 +25,10 @@ onHomePageFeedRoute(){
   }, 99); // grab the last 99 items
 }
 
+gun.get("@username").time(notificationObject)
+
+
+
 
 var Gun = require('gun');
 var os = require('os');

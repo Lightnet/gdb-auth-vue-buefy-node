@@ -6,7 +6,7 @@
                 <div>
                 <label class="button is-text">From: {{ message.from }} </label>
                 <label class="button is-text"> {{ message.message }} </label>
-                <a class="icon" style="float: right;">
+                <a class="icon" style="float: right;" v-on:click="$emit('deletemessage',message)">
                     <b-icon
                         pack="fas"
                         icon="trash"

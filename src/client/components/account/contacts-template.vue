@@ -151,7 +151,7 @@ export default {
 				type: 'is-success'
 			});
 			//need to fix this. incase over lap copy
-			this.contacts.push({id:pub,alias:who.alias});
+			//this.contacts.push({id:pub,alias:who.alias});
 			//console.log('added contact!');
 		},
 		getpubkey:_.debounce(//typing key checks pub key string
@@ -212,9 +212,7 @@ export default {
 			//console.log(event);
 			let user = this.$root.user;
 			let self = this;
-			//CKLj2fswWfmJKiSVHEhNCWQh-c9bHBWgh3I45lm3OJo.Flq2KgGaAOqptA09C8L_msnh4uu6NTZgKQuVswebKoE
-
-
+			
 			this.$dialog.confirm({
 				message: 'This will permanently delete the '+ event.alias  + '. Continue?',
 				onConfirm:(value)=>{
