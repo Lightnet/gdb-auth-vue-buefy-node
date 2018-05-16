@@ -49,7 +49,7 @@ export default {
 	//props:['blogin'],
 	data() {
 		return{
-			bchatlistselect:false,
+			bchatlistselect:true,
 			userpublickey:'',
 			blogin:false,
 			messages:[],
@@ -171,6 +171,8 @@ export default {
 			user.get('chatroom').set(enc, function(ack){
 				//console.log(ack);
 			});
+
+			this.chatmessage = '';
 			
 			//user.get('chatroom').get(this.publickey_chat).set(enc, function(ack){
 				//console.log(ack);

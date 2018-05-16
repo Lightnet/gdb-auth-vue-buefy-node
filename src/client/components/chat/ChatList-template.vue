@@ -31,11 +31,11 @@
 		</p>
 
 		<p class="control is-expanded">
-			<label class="button is-text">Status:</label>
+			<label class="button is-text">Status: {{chatstatus}}</label>
 		</p>
 
 		<p class="control">
-			<button class="button" href="#">Create Room</button>
+			<button class="button" href="#" v-on:click="actionCreateChat">Create Room</button>
 			<button class="button" href="#">Options</button>
 		</p>
 	</div>
@@ -43,7 +43,7 @@
 
 <script>
 //event on and emit global
-//import bus from '../../bus';
+import bus from '../../bus';
 
 export default {
 	props:['chatrooms'],
@@ -51,6 +51,7 @@ export default {
 		return{
 			//bchatlistselect:false,
 			chatroomid:null,
+			chatstatus:'None',
 		}
 	},
 	components: {
@@ -75,6 +76,9 @@ export default {
 	mounted(){},
 	computed: {},
 	methods:{
+		actionCreateChat(){
+			bus.$emit('view','createchatroom');
+		},
 		updateChatList(){
 			let user = this.$root.$gun.user();
 			user.get('contacts').map().once((data,id)=>{

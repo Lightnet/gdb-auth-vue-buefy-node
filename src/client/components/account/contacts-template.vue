@@ -175,11 +175,12 @@ export default {
 			let who = await to.then() || {};
 			this.pubkeystatus = 'Name: '+ who.alias || "User not found.";
 			if(!who.alias){ return }
+			console.log(who.alias);
 
 			to.get('profile').map().once((data,id)=>{
 				//console.log("profile");
-				//console.log(data);
-				//console.log(id);
+				console.log(data);
+				console.log(id);
 				if(id == 'name'){
 					this.pubname = data;
 				}

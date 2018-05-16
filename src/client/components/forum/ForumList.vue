@@ -29,7 +29,7 @@
 			</p>
 			
 			<p class="control">
-				<button class="button" href="#">Create Forum</button>
+				<button class="button" href="#" v-on:click="actionCreateForum">Create Forum</button>
 				<button class="button" href="#">Options</button>
 			</p>
 		</div>
@@ -37,12 +37,14 @@
 </template>
 
 <script>
+import bus from '../../bus';
+
 export default {
     //name: 'app',
 	props:['forums'],
     data() {
 		return {
-			bforumlistselect:false,
+			bforumlistselect:true,
 			//forums:[],
 			forumid:null,
 		}
@@ -53,6 +55,9 @@ export default {
 		this.updateForumList();
 	},
 	methods:{
+		actionCreateForum(){
+			bus.$emit('view','createforum');
+		},
 		formatDate(date) {
 			let hours = date.getHours();
 			let minutes = date.getMinutes();

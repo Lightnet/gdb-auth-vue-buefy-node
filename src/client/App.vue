@@ -17,40 +17,24 @@
 				<div id="navbarTransparent" class="navbar-menu" @click="handleSelect" v-bind:class="{ 'is-active': isActive }">
 
 					<div class="navbar-start">
-					<a class="navbar-item" href="#">
-						Home
-					</a>
-					<a class="navbar-item" href="#">
-						Account
-					</a>
-					<a class="navbar-item" href="#">
-						Messages
-					</a>
-					<a class="navbar-item" href="#">
-						Chat
-					</a>
-					<a class="navbar-item" href="#">
-						To Do List
-					</a>
-					<a class="navbar-item" href="#">
-						Forum
-					</a>
-					<a class="navbar-item" href="#">
-						Test
-					</a>
-					<div class="navbar-item has-dropdown is-hoverable">
-						<a class="navbar-link" href="#">
-						Theme
-						</a>
-						<div class="navbar-dropdown is-boxed">
-						<a class="navbar-item" @click="handleSelect" href="#">
-							Light
-						</a>
-						<a class="navbar-item" @click="handleSelect" href="#">
-							Dark
-						</a>
+						<a class="navbar-item" href="#">Home</a>
+						<a class="navbar-item" href="#">Account</a>
+						<a class="navbar-item" href="#">Messages</a>
+						<a class="navbar-item" href="#">Chat</a>
+						<a class="navbar-item" href="#">Forum</a>
+						
+						<div class="navbar-item has-dropdown is-hoverable">
+							<a class="navbar-link" href="#">Options</a>
+							<div class="navbar-dropdown is-boxed">
+								<a class="navbar-item" href="#">To Do List</a>
+								<a class="navbar-item" href="#">Test</a>
+								<a class="navbar-link" href="#">Theme</a>
+								<a class="navbar-item" @click="handleSelect" href="#">Light</a>
+								<a class="navbar-item" @click="handleSelect" href="#">Dark</a>
+								
+							</div>
 						</div>
-					</div>
+						
 					</div>
 
 					<div class="navbar-end">
@@ -122,6 +106,9 @@ import accountTemplate from './components/Account-template.vue';
 import MsgBoxTemplate from './components/PMBox-template.vue';
 import chatTemplate from './components/Chat-template.vue';
 
+import createchatroomTemplate from './components/chat/CreateChatRoom-template.vue';
+import createFourmTemplate from './components/forum/CreateForum-template.vue';
+
 import PrototypeTemplate from './components/Prototype-template.vue';
 
 export default {
@@ -159,6 +146,8 @@ export default {
 			this.updateProfileInfo();
 		});
 
+		bus.$on('view', this.view);
+
 		//this.username = this.$root.$gun.user().is.alias;
 		this.timeEvent();
 		this.timer = setInterval(this.timeEvent, 1000)
@@ -173,8 +162,26 @@ export default {
 		'chat':chatTemplate,
 		'pm':MsgBoxTemplate,
 		'prototype':PrototypeTemplate,
+		'createchatroom':createchatroomTemplate,
+		'createforum':createFourmTemplate,
 	},
 	methods: {
+		view(event){
+			console.log(event);
+			if(event == 'createchatroom'){
+				this.currentView = 'createchatroom';
+			}
+
+			if(event == 'createforum'){
+				this.currentView = 'createforum';
+			}
+			if(event == 'chat'){
+				this.currentView = 'chat';
+			}
+			if(event == 'forum'){
+				this.currentView = 'forum';
+			}
+		},
 		timeEvent(){
 			//get gun time
 			let time = new Date(Gun.state());

@@ -32,7 +32,7 @@
 		<section v-if="bprofileinfo">
 			<b-field>
 				<label class="button is-text">Alias</label>
-				<b-input style="width:400px;" v-model="pubname" placeholder="name" v-on:change="updateprofiledata('name',pubname)"></b-input>
+				<b-input style="width:400px;" v-model="pubname" placeholder="name" v-on:keyup.enter.native="updateprofiledata('name',pubname)"></b-input>
 				<button class="button" v-on:click="access_pubkey('pubname')">
 					<b-icon
                 	pack="fas"
@@ -43,7 +43,7 @@
 			</b-field>
 			<b-field>
 				<label class="button is-text">Born</label>
-				<b-input style="width:400px;" v-model="pubborn" placeholder="born" v-on:change="updateprofiledata('born',pubborn)"></b-input>
+				<b-input style="width:400px;" v-model="pubborn" placeholder="born" v-on:keyup.enter.native="updateprofiledata('born',pubborn)"></b-input>
 				<button class="button" v-on:click="access_pubkey('pubborn')">
 					<b-icon
                 	pack="fas"
@@ -54,7 +54,7 @@
 			</b-field>
 			<b-field>
 				<label class="button is-text">Education</label>
-				<b-input style="width:400px;" v-model="pubeducation" placeholder="education" v-on:change="updateprofiledata('education',pubeducation)"></b-input>
+				<b-input style="width:400px;" v-model="pubeducation" placeholder="education" v-on:keyup.enter.native="updateprofiledata('education',pubeducation)"></b-input>
 				<button class="button" v-on:click="access_pubkey('pubeducation')">
 					<b-icon
                 	pack="fas"
@@ -65,7 +65,7 @@
 			</b-field>
 			<b-field>
 				<label class="button is-text">Skills</label>
-				<b-input style="width:400px;" v-model="pubskills" placeholder="skills" v-on:change="updateprofiledata('skills',pubskills)"></b-input>
+				<b-input style="width:400px;" v-model="pubskills" placeholder="skills" v-on:keyup.enter.native="updateprofiledata('skills',pubskills)"></b-input>
 				<button class="button" v-on:click="access_pubkey('pubskills')">
 					<b-icon
                 	pack="fas"
@@ -137,7 +137,11 @@ export default {
 			this.$root.user.get('profile').get(value).put(key,(ack)=>{
 				//console.log(ack);
 				if(ack.ok){
-					this.$message({message:'Update ' + value + '!',type: 'success',duration:800});
+					//this.$message({message:'Update ' + value + '!',type: 'success',duration:800});
+					this.$toast.open({
+                    	message: 'Update ' + value + '!',
+                    	type: 'is-success'
+                	});
 				}
 			});
 		},
