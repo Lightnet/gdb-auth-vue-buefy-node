@@ -2,12 +2,12 @@
 	<div>
 		<div v-if="blogin">
 			<button class="button">Status</button>
+			<button class="button">Chat</button>
 			<button class="button">Commands</button>
 			<button class="button">DataBase</button>
 			<button class="button">Scripts</button>
 			<button class="button">Help</button>
 			<button class="button">Settings</button>
-
 
 			<div class="container">
 				<component :is="currentView"></component>
@@ -30,6 +30,7 @@
 //import bus from '../../bus';
 
 import BotStatus from './bot/BotStatus-template.vue';
+import BotChat from './bot/BotChat-template.vue';
 
 export default {
 	props:[],
@@ -37,11 +38,13 @@ export default {
 		return{
 			blogin:false,
 			bdisplaydatabase:false,
-			currentView:'botstatus',
+			//currentView:'botstatus',
+			currentView:'botchat',
 		}
     },
 	components:{
 		'botstatus':BotStatus,
+		'botchat':BotChat,
 	},
     created(){
 		if(this.$root.blogin){
@@ -58,3 +61,4 @@ export default {
 <style lang="scss">
 
 </style>
+
