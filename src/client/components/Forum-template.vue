@@ -74,7 +74,7 @@ export default {
 			blogin:false,
 			forumname:'Null',
 			forumdata:null,
-			bforumlistselect:true,
+			bforumlistselect:false,
 		}
 	},
 	components: {
@@ -99,8 +99,8 @@ export default {
 			let gun = this.$root.$gun;
 			let user = gun.user();
 			user.get('forumlist').map().once((data,id)=>{
-				console.log(data);
-				console.log(id);
+				//console.log(data);
+				//console.log(id);
 				this.forumlist.push({
 					id:id,
 					name:data.name,
@@ -112,7 +112,7 @@ export default {
 			});
 		},
 		selectForumID(event){
-			console.log(event);
+			//console.log(event);
 			this.forumdata = event;
 			this.forumname = event.name;
 			this.updateforum();
@@ -123,7 +123,7 @@ export default {
 			//console.log(this.forumdata);
 
 			if(!this.forumdata){
-				console.log('forum null');
+				//console.log('forum null');
 				return;
 			}
 			this.$root.forumdata = this.forumdata;
@@ -138,7 +138,7 @@ export default {
 
 			if(this.forumdata.access == 'public'){
 				gun.get(this.forumdata.key).get('topic').map().once((data,id)=>{
-					console.log('topic',data);
+					//console.log('topic',data);
 
 					if((data == null)||(data == 'null'))
 						return;
@@ -181,7 +181,8 @@ export default {
 				});
 
 				gun.get(this.forumdata.key).get('topic').get(event.id).map().once((data,id)=>{
-					console.log(data);
+					//console.log('DATA>>>>>>>>>>>>');
+					//console.log(data);
 					//console.log(id);
 					if((data == null)||(data == 'null')||(data.alias == null))
 						return;
@@ -198,46 +199,8 @@ export default {
 						
 				});
 
-
-
 			}
 
-
-			//id post
-			/*
-			gun_posts.get(event.id).once((data)=>{
-				//console.log(data);
-				if((data == null)||(data == 'null'))
-					return;
-				self.topics.push({
-					id:event.id,
-					alias:data.alias,
-					posttitle:data.posttitle,
-					content:data.postcontent,
-					postdate:data.postdate,
-					bedit:false,
-					isParent:true,
-				});
-			});
-			//get key id for map topic post list
-			gun.get(event.id).map().once((data,id)=>{
-				//console.log(data);
-				//console.log(id);
-				if((data == null)||(data == 'null'))
-					return;
-
-				self.topics.push({
-					id:id,
-					alias:data.alias,
-					posttitle:data.posttitle,
-					content:data.postcontent,
-					postdate:data.postdate,
-					bedit:false,
-					isparent:false,
-				});
-					
-			});
-			*/
 			this.topicpubkey = event.id;
 			this.publickeypost = event.id;
 		},
@@ -247,9 +210,9 @@ export default {
 			let gun = this.$root.$gun;
 
 			gun.get(this.forumdata.key).get('topic').get(post.id).put({posttitle:post.text},ack=>{
-				console.log('ack',ack);
+				//console.log('ack',ack);
 				if(ack.err){
-					console.log("fail edit!");
+					//console.log("fail edit!");
 					this.$toast.open({
 						message: 'Topic Edit Fail!',
 						type: 'is-warning'
@@ -257,7 +220,7 @@ export default {
 					return;
 				}
 				if(ack.ok){
-					console.log("pass edit!");
+					//console.log("pass edit!");
 					this.$toast.open({
 						message: 'Topic Edit Update!',
 						type: 'is-success'
@@ -294,9 +257,9 @@ export default {
 			let self = this;
 
 			gun.get(this.forumdata.key).get('topic').get(event.id).put('null',ack=>{
-				console.log('ack',ack);
+				//console.log('ack',ack);
 				if(ack.err){
-					console.log("fail edit!");
+					//console.log("fail edit!");
 					this.$toast.open({
 						message: 'Topic delete Fail!',
 						type: 'is-warning'
@@ -304,7 +267,7 @@ export default {
 					return;
 				}
 				if(ack.ok){
-					console.log("pass edit!");
+					//console.log("pass edit!");
 					this.$toast.open({
 						message: 'Topic Delete!',
 						type: 'is-success'

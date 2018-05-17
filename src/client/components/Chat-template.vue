@@ -90,8 +90,8 @@ export default {
 		updatechatlist(){
 			let user = this.$root.$gun.user();
 			user.get('chatlist').map().once((data,id)=>{
-				console.log(data);
-				console.log("list?");
+				//console.log(data);
+				//console.log("list?");
 				if((data == 'null')||(data == null))
 					return;
 				if(!data.key)
@@ -108,7 +108,7 @@ export default {
 			});
 		},
 		chatroomselect(event){
-			console.log(event);
+			//console.log(event);
 			let user = this.$root.$gun.user();
 			this.messages = [];
 			//console.log('clear message');
@@ -139,7 +139,7 @@ export default {
 			let user = this.$root.$gun.user();
 
 			if(!this.chatdata){
-				console.log("Null Chat Room!");
+				//console.log("Null Chat Room!");
 				return;
 			}
 
@@ -147,7 +147,7 @@ export default {
 			//user.get('chatroom').get(event.id).put('null');
 			if(this.chatdata.access == 'public'){
 				gun.get(this.chatdata.key).get(event.id).put({message:event.message}, ack=>{
-					console.log(ack);
+					//console.log(ack);
 				});
 			}
 
@@ -198,7 +198,7 @@ export default {
 		},
 		enterchat(event){
 			this.chatmessage = event;
-			console.log('test');
+			//console.log('test');
 			this.sentmessage();
 		},
 		async sentmessage(){
@@ -206,7 +206,7 @@ export default {
 			//console.log(this.$root.user);
 
 			if(!this.chatdata){
-				console.log("Null Chat Room!");
+				//console.log("Null Chat Room!");
 				return;
 			}
 			let gun = this.$root.$gun;
@@ -229,7 +229,7 @@ export default {
 			if(this.chatdata.access == 'public'){
 				let enc = messagedata;
 				gun.get(this.chatdata.key).set(enc,ack=>{
-					console.log(ack);
+					//console.log(ack);
 				});
 			}
 
@@ -246,7 +246,7 @@ export default {
 			let user = this.$root.$gun.user();
 
 			if(!this.chatdata){
-				console.log("Null Chat Room!");
+				//console.log("Null Chat Room!");
 				return;
 			}
 
@@ -254,7 +254,7 @@ export default {
 			//user.get('chatroom').get(event.id).put('null');
 			if(this.chatdata.access == 'public'){
 				gun.get(this.chatdata.key).get(event.id).put('null', ack=>{
-					console.log(ack);
+					//console.log(ack);
 				});
 			}
 

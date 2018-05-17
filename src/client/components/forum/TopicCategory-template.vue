@@ -6,7 +6,7 @@
 					<div class="field is-grouped is-grouped-left">
 						<p class="control is-expanded">
 						<label class="label wrap" v-if="!post.bedit" v-on:click="$emit('topicview',post)"> {{ post.text }} </label>
-						<b-input v-if="post.bedit" v-model="post.text"  v-on:keyup.enter.native="$emit('topicchange',post)"></b-input>
+						<b-input type="textarea" v-if="post.bedit" v-model="post.text"  v-on:keyup.enter.native="$emit('topicchange',post)"></b-input>
 						</p>
 						<p class="control">
 							<button class="button is-primary" @click="$emit('topicedit',post)">

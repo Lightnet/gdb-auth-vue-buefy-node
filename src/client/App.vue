@@ -142,7 +142,7 @@ export default {
 		//});
 
 		bus.$on('login',(event)=>{
-			console.log("data child?");
+			//console.log("data child?");
 			this.updateProfileInfo();
 		});
 

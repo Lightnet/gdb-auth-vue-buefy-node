@@ -13,7 +13,7 @@
 							<strong>User: {{topic.alias}} | Title: {{ topic.posttitle }} </strong>
 							<br>
 							<span v-if="!topic.bedit" class="wrap">{{ topic.content }}</span>
-							<textarea v-if="topic.bedit" v-model="topic.content"></textarea>
+							<b-input type="textarea" v-if="topic.bedit" v-model="topic.content" v-on:keydown.enter.native="topic_editchange(topic)"></b-input>
 							<br>
 							Date: {{ topic.postdate }}
 						</p>
@@ -26,7 +26,7 @@
 							icon="edit">
 						</b-icon>
 					</button>
-					<button class="button is-danger" icon="el-icon-delete" @click="action_deletetopicpost(topic)">
+					<button class="button is-danger" icon="el-icon-delete" v-on:click="action_deletetopicpost(topic)">
 						<b-icon
 							pack="fas"
 							icon="trash">
@@ -80,13 +80,45 @@ export default {
 			//console.log(this);
 			post.bedit = !post.bedit;
 		},
+		topic_editchange(event){
+			//console.log("edit finish");
+			//console.log(event);
+			//post
+			let self = this;
+			let gun = this.$root.$gun;
+
+			gun.get(this.topicpubkey).get(event.id).put({postcontent:event.content},(ack)=>{
+				//console.log(ack);
+				if(ack.err){
+					//self.poststatus = 'Error Update Post!';
+					//self.$message.error({message:'Error Post!',duration:800});
+					self.$toast.open({
+						message: 'Error Update Post!',
+						type: 'is-warning'
+					});
+				}
+				if(ack.ok){
+					//self.poststatus = 'Posted!';
+					//self.bpost = false;
+					//self.$message({message:'Posted!',type: 'success',duration:800});
+					self.$toast.open({
+						message: 'Updated Posted!',
+						type: 'is-success'
+					});
+				}
+				//clear public key
+				//self.pubkey = '';
+				//self.$root.publickeypost = '';
+			});
+			
+			event.bedit = false;
+		},
 		action_deletetopicpost(event){
-			console.log(event);
+			//console.log(event);
 			this.$dialog.confirm({
 				message: 'Topic Delete ' + event.posttitle + '?',
 				onConfirm:(value)=>{
-					this.$toast.open({message:'Delete Topic! ' + event.posttitle ,type:'is-success'});
-
+					//this.$toast.open({message:'Delete Topic! ' + event.posttitle ,type:'is-success'});
 					this.topic_delete(event);
 				},
 				onCancel:()=>{
@@ -95,30 +127,35 @@ export default {
 			});
 		},
 		topic_delete(event){
-			//console.log("topic_delete:",idToRemove);
-			let gun = this.$root.user;
-			//console.log('this.topicpubkey',this.topicpubkey);
-			//console.log('idToRemove',event.id);
-			
-			//let gun_posts = gun.get('posts').get(this.topicpubkey);
-			//null child keys
-			//gun.get(idToRemove).map().once((key,id)=>{
-				//gun.get(idToRemove).get(id).put('null',function(ack){
-					//console.log(ack);
-				//});
+			//console.log("topic_delete:",event);
+			let gun = this.$root.$gun;
+			let self = this;
+			//gun.get(this.topicpubkey).get(event.id).once(data=>{
+				//console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+				//console.log(data);
 			//});
 
-			//null key
-			gun.get(this.topicpubkey).get(event.id).put('null',function(ack){
+			gun.get(this.topicpubkey).get(event.id).put('null',(ack)=>{
 				//console.log(ack);
+				if(ack.err){
+					self.$toast.open({
+						message: 'Error Update Post!',
+						type: 'is-warning'
+					});
+				}
+				if(ack.ok){
+					self.$toast.open({
+						message: 'Delete Posted!',
+						type: 'is-success'
+					});
+					//remove item from list
+					let topics = self.mtopics;
+					topics = topics.filter(post => {
+						return post.id !== event.id
+					});
+					self.mtopics = topics;
+				}
 			});
-			//remove item from list
-			let topics = this.mtopics;
-			topics = topics.filter(post => {
-				return post.id !== event.id
-			});
-
-			this.mtopics = topics;
 		},
 	},
 	beforeDestroy: function () {

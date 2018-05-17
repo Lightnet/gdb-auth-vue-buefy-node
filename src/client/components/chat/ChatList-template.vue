@@ -92,7 +92,7 @@ export default {
 			let gun = this.$root.$gun;
 			let self = this;
 			gun.get(this.chatroomid).once(data=>{
-				console.log('test',data);
+				//console.log('test',data);
 				if(data !=null){
 					self.chatstatus = "Found";
 				}else{
@@ -106,7 +106,7 @@ export default {
 		async chatlist_add(event){
 			let gun = this.$root.$gun;
 			let user = gun.user();
-			console.log('add list....');
+			//console.log('add list....');
 			//gun.get(this.chatroomid).once(data=>{
 				//console.log(data);
 			//});
@@ -144,7 +144,7 @@ export default {
 				own:own,
 				pub:pub
 			},(ack)=>{
-				console.log(ack);
+				//console.log(ack);
 				if(ack.err){
 					//console.log("err");
 					return;

@@ -90,77 +90,57 @@ export default {
 
 				let gun = this.$root.$gun;
 				let forumdata = this.$root.forumdata;
-				console.log(forumdata);
+				//console.log(forumdata);
 				if(forumdata.access == 'public'){
-					gun.get(forumdata.key).get('topic').set(post,ack=>{
-						if(ack.err){
-							console.log('error!');
-							return;
-						}
-						console.log(ack);
-						if(ack.ok){
-							self.$toast.open({
-								message: 'Posted!',
-								type: 'is-success'
-							});
-						}
-					});
+					if(this.pubkey){
+						//post from topic list
+						gun.get(this.pubkey).set(post,(ack)=>{
+							//console.log(ack);
+							if(ack.err){
+								self.poststatus = 'Error Post!';
+								//self.$message.error({message:'Error Post!',duration:800});
+								self.$toast.open({
+									message: 'Error Post!',
+									type: 'is-warning'
+								});
+							}
+							if(ack.ok){
+								self.poststatus = 'Posted!';
+								self.bpost = false;
+								//self.$message({message:'Posted!',type: 'success',duration:800});
+								self.$toast.open({
+									message: 'Posted!',
+									type: 'is-success'
+								});
+							}
+							//clear public key
+							self.pubkey = '';
+							self.$root.publickeypost = '';
+						});
+
+
+					}else{
+						//default
+						//post from topic level
+						gun.get(forumdata.key).get('topic').set(post,ack=>{
+							if(ack.err){
+								console.log('error!');
+								return;
+							}
+							console.log(ack);
+							if(ack.ok){
+								self.$toast.open({
+									message: 'Posted!',
+									type: 'is-success'
+								});
+							}
+						});
+					}
 
 					self.pubkey = '';
 					self.$root.publickeypost = '';
 				}
 
-				/*
-				if(this.pubkey){
-					//console.log("keyfound!");
-					let gun = this.$root.user;
-					gun.get(this.pubkey).set(post,(ack)=>{
-						//console.log(ack);
-						if(ack.err){
-							self.poststatus = 'Error Post!';
-							//self.$message.error({message:'Error Post!',duration:800});
-							self.$toast.open({
-								message: 'Error Post!',
-								type: 'is-warning'
-							});
-						}
-						if(ack.ok){
-							self.poststatus = 'Posted!';
-							self.bpost = false;
-							//self.$message({message:'Posted!',type: 'success',duration:800});
-							self.$toast.open({
-								message: 'Posted!',
-								type: 'is-success'
-							});
-						}
-						//clear public key
-						self.pubkey = '';
-						self.$root.publickeypost = '';
-					});
-				}else{
-					//console.log("default!");
-					this.gun_posts.set(post,(ack)=>{
-						//console.log(ack);
-						if(ack.err){
-							self.poststatus = 'Error Post!';
-							//self.$message.error({message:'Error Post!',duration:800});
-							self.$toast.open({
-								message: 'Error Post!',
-								type: 'is-warning'
-							});
-						}
-						if(ack.ok){
-							self.poststatus = 'Posted!';
-							self.bpost = false;
-							//self.$message({message:'Posted!',type: 'success',duration:800});
-							self.$toast.open({
-								message: 'Posted!',
-								type: 'is-success'
-							});
-						}
-					});
-				}
-				*/
 			}
 
 			//this.bpost = false;
