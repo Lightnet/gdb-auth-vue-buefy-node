@@ -24,7 +24,7 @@
 			</p>
 
 			<p class="control is-expanded">
-				<button  class="button">Add</button>
+				<button class="button" @click="forumlist_add">Add</button>
 				<label class="button is-text"> Status: {{forumstatus}} </label> 
 			</p>
 			
@@ -117,6 +117,71 @@ export default {
 				//console.log(id);
 				//self.forums.push({id:id,alias:data.alias});
 			//});
+		},
+		async forumlist_add(event){
+			let gun = this.$root.$gun;
+			let user = gun.user();
+			//console.log('add list....');
+			//gun.get(this.chatroomid).once(data=>{
+				//console.log(data);
+			//});
+			let bfound = false;
+
+			//if(!this.forumdata)
+				//return;
+
+			//console.log(this.chatroomid);
+			for (let room in this.forums){
+				//console.log(this.chatrooms[room]);
+				if(this.forums[room].key == this.forumid){
+					//console.log(this.chatrooms[room].key);
+					bfound = true;
+					break;
+				}
+			}
+
+			if(bfound){
+				console.log("found in list");
+				return;
+			}
+
+			console.log(this.forumid);
+
+			let pub = await gun.get(this.forumid).get('pub').then();
+			let access = await gun.get(this.forumid).get('access').then();
+			let own = await gun.get(this.forumid).get('own').then();
+			let chatname = await gun.get(this.forumid).get('name').then();
+			//console.log(access);
+			//console.log(own);
+			//console.log(chatname);
+			//console.log(this.chatroomid);
+			//console.log(texthash);
+			user.get('forumlist').set({
+				name:chatname,
+				access:access,
+				key:this.forumid,
+				own:own,
+				pub:pub
+			},(ack)=>{
+				//console.log(ack);
+				if(ack.err){
+					//console.log("err");
+					this.$toast.open({
+						message: 'Fail Added Forum List!',
+						type: 'is-warning'
+					});
+					return;
+				}
+				if(ack.ok){
+					//console.log("pass");
+					this.$toast.open({
+						message: 'Pass Added Forum List!',
+						type: 'is-success'
+					});
+
+				}
+			});
+			
 		},
 	},
 	beforeDestroy() {

@@ -3,6 +3,7 @@
 		<p class="control">
 			<b-field>
 			<b-select placeholder="Select a Chat" v-model="chatroomdata" v-on:input="$emit('chatroomselect',chatroomdata)">
+				<option disabled value=""> Select a Chat </option>
 				<option
 					v-for="chatroom in chatrooms" 
 					:key="chatroom.id" 
@@ -112,8 +113,8 @@ export default {
 			//});
 			let bfound = false;
 
-			if(!this.chatroomdata)
-				return;
+			//if(!this.chatroomdata)
+				//return;
 
 			//console.log(this.chatroomid);
 			for (let room in this.chatrooms){
@@ -153,7 +154,6 @@ export default {
 					//console.log("pass");
 				}
 			});
-			
 		},
 		chatlist_delete(event){
 		},
