@@ -19,6 +19,7 @@
 					<div class="navbar-start">
 						<a class="navbar-item" href="#">Home</a>
 						<a class="navbar-item" href="#">Account</a>
+						<a class="navbar-item" href="#">Bot</a>
 						<a class="navbar-item" href="#">Messages</a>
 						<a class="navbar-item" href="#">Chat</a>
 						<a class="navbar-item" href="#">Forum</a>
@@ -108,8 +109,8 @@ import chatTemplate from './components/Chat-template.vue';
 
 import createchatroomTemplate from './components/chat/CreateChatRoom-template.vue';
 import createFourmTemplate from './components/forum/CreateForum-template.vue';
-
 import PrototypeTemplate from './components/Prototype-template.vue';
+import botTemplate from './components/Bot-template.vue';
 
 export default {
     name: 'app',
@@ -164,6 +165,7 @@ export default {
 		'prototype':PrototypeTemplate,
 		'createchatroom':createchatroomTemplate,
 		'createforum':createFourmTemplate,
+		'bot':botTemplate,
 	},
 	methods: {
 		view(event){
@@ -180,6 +182,9 @@ export default {
 			}
 			if(event == 'forum'){
 				this.currentView = 'forum';
+			}
+			if(event == 'bot'){
+				this.currentView = 'bot';
 			}
 		},
 		timeEvent(){
@@ -255,6 +260,10 @@ export default {
 			if(event.target.innerText == 'Test'){
 				this.currentView = 'prototype'
 			}
+			if(event.target.innerText == 'Bot'){
+				this.currentView = 'bot'
+			}
+
 
 			if(event.target.innerText == 'To Do List'){
 				this.currentView = 'todolist'
