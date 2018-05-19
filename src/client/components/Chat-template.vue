@@ -253,14 +253,31 @@ export default {
 			//user.get('chatroom').get(this.publickey_chat).get(event.id).put('null');
 			//user.get('chatroom').get(event.id).put('null');
 			if(this.chatdata.access == 'public'){
+				console.log("delte chat message???");
 				gun.get(this.chatdata.key).get(event.id).put('null', ack=>{
-					//console.log(ack);
+				//gun.get(this.chatdata.key).get(event.id).put(null, ack=>{
+					console.log(ack);
+					if(ack.err){
+						this.$toast.open({
+							message: ack.err,
+							type: 'is-danger'
+						});
+
+						return;
+					}
+					if(ack.ok){
+						this.$toast.open({
+								message: 'Chat Message Delete!',
+								type: 'is-danger'
+							});
+						this.messages = this.messages.filter(todo => {
+							return todo.id !== event.id;
+						});
+					}
 				});
 			}
 
-			this.messages = this.messages.filter(todo => {
-				return todo.id !== event.id;
-			});
+			
 		},
 	},
 	beforeDestroy: function () {

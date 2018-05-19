@@ -12,20 +12,18 @@ Vue.use(Buefy);
 
 import VueGun from 'vue-gun';
 //gun.js
-import Gun from 'gun';
+import Gun from 'gun/gun';
 import 'gun/sea';
 
-
 //custom chain gun.js
-
 import 'gun/nts';
 import 'gun/lib/time';
 
-import 'gun/lib/path';
-import 'gun/lib/load';
-import 'gun/lib/open';
-import 'gun/lib/then';
-import 'gun/lib/unset';
+//import 'gun/lib/path';
+//import 'gun/lib/load';
+//import 'gun/lib/open';
+//import 'gun/lib/then';
+//import 'gun/lib/unset';
 
 var SEA = Gun.SEA;
 window.SEA = SEA;
@@ -173,9 +171,7 @@ Vue.use(VueGun, {
 						message: 'Connected!',
 						type: 'is-success'
 					});
-	
 				});
-
 				this.$gun.on('bye', (peer)=>{// peer disconnect
 					console.log('disconnected from', peer);
 					//this.$message({message:'Disconnected!',type:'warning',duration:800});
