@@ -1,6 +1,6 @@
 // client-side js
-
 localStorage.clear(); //clear database for gun
+console.log("client main point");
 
 // run by the browser each time your view template referencing it is loaded
 import Vue from 'vue';
@@ -12,12 +12,12 @@ Vue.use(Buefy);
 
 import VueGun from 'vue-gun';
 //gun.js
-import Gun from 'gun/gun';
-import 'gun/sea';
+//import Gun from 'gun/gun';
+//import 'gun/sea';
 
-//custom chain gun.js
-import 'gun/nts';
-import 'gun/lib/time';
+//lib gun.js
+//import 'gun/nts';
+//import 'gun/lib/time';
 
 //import 'gun/lib/path';
 //import 'gun/lib/load';
@@ -56,19 +56,8 @@ window.SEA = SEA;
 	//console.log(at);
 	//this.to.next(at); 
 //});
-//Gun.on('secure', function(msg){
-	//var yes;
-	/* enforce some rules about data */
-	/* requires wire-spec understanding */
-	//if(yes){
-			//this.to.next(msg); // call next middleware
-	//}
-	//console.log('secure');
-	// NOT calling next middleware firewalls the data.
-//});
-//Gun.get('node').map().once(function(data){
-	//console.log('data',data);
-//});
+
+
 var gun;
 if(location.origin == 'http://localhost:3000'){
 	gun = Gun({
@@ -80,35 +69,20 @@ if(location.origin == 'http://localhost:3000'){
 	gun = Gun(location.origin + '/gun');
 	console.log('host gun.js');
 }
+
 console.log(gun);
 //gun.get('@').time((data, key, time)=>{ // subscribe to all incoming posts
 	//console.log(data);
     // data might be a soul that you have to GET, I haven't made `time` be chainable yet
 //}, 99); // grab the last 99 items
 
-//require('./test');
-//gun.on('hi', peer => {
-	//console.log('connect peer to',peer);
-//});
-//gun.on('bye', function(peer){// peer disconnect.
-	//console.log('disconnected from', peer);
-//});
-//console.log(gun);
+gun.on('hi', peer => {
+	console.log('connect peer to',peer);
+});
+gun.on('bye', function(peer){// peer disconnect.
+	console.log('disconnected from', peer);
+});
 //gun.get('data').once(function(){});//init connection
-//gun.on('auth', function(at){
-	//if('sign' === c.hash){ c.hash = '' }
-	//as.route(c.hash || 'people');
-	//console.log('auth');
-//});
-//gun.on('secure', function(at){
-	//console.log('secure');
-//});
-//var c = window.c = {};
-//c.hash = location.hash.slice(1);
-//console.log("c.hash ",c.hash );
-//Gun.on('opt',function(data){
-	//console.log("update:", data);
-//});
 //https://stackoverflow.com/questions/49519571/gun-v0-9-92-using-sea-cant-put-nested-data-when-not-logged-in
 //window.onload = function() {
 	//loginuser("test","test");
@@ -134,7 +108,7 @@ Vue.use(VueGun, {
 //(function(){
 	//console.log('hello world :o');
 	//console.log('GunDB and Vue?');
-		
+	
 	import bus from "./bus.js"; //var eventHub = new Vue();
 	import App from "./App.vue";
 
@@ -244,22 +218,11 @@ Vue.use(VueGun, {
 				user.leave();
 
 				//this.$gun.user().leave();
-				/*
-				this.$gun.user().leave((ack)=>{ 
-					console.log("ack",ack);
-					//console.log("Logout Finish");
-					//self.$message('Auth attempt failed!');
-					self.$toast.open({
-						message: ack,
-						type: 'is-success'
-					});
-				});
-				*/
 				//bus.$emit('action','logout');
 				this.blogin = false;
 				location.reload();
 			}
 		},
 	});
-		
+	
 //})()

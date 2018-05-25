@@ -55,7 +55,6 @@ app.get("/fonts/element-icons.woff", function (request, response) {
   response.redirect("https://cdn.glitch.com/94ca57e3-7116-4770-8a69-e0034c332f65%2Felement-icons.woff?1525640368138");
 });
 
-
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (request, response) {
   //response.sendFile(__dirname + '/views/index.html');
@@ -69,9 +68,19 @@ var listener = app.listen(PORT, function () {
   //console.log(listener.address());
 });
 
-var gun = Gun({
+var gunconfig = {
   //file: dbFile,
   web:listener//server express
+}
+
+var gun = Gun(gunconfig);
+
+gun.on('hi', peer => {
+	console.log('connect peer to',peer);
 });
+gun.on('bye', function(peer){// peer disconnect.
+	console.log('disconnected from', peer);
+});
+
 
 

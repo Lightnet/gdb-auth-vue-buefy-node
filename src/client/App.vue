@@ -20,6 +20,8 @@
 						<a class="navbar-item" href="#">Home</a>
 						<a class="navbar-item" href="#">Account</a>
 						<a class="navbar-item" href="#">Bot</a>
+						<a class="navbar-item" href="#">Documents</a>
+						<a class="navbar-item" href="#">Database</a>
 						<a class="navbar-item" href="#">Messages</a>
 						<a class="navbar-item" href="#">Chat</a>
 						<a class="navbar-item" href="#">Forum</a>
