@@ -2,8 +2,7 @@
 	Created by: Lightnet
 
 	Information: Prototype build.
-	
-	
+
 */
 import RPGData from '../common/RPGData';
 import RPGCharacter from '../common/RPGCharacter';
@@ -19,8 +18,8 @@ export default class DBotFramework{
 		this.client = options.client || null;
 		this.io = options.io || null;
 		this.gun = options.gun || null;
+		this.bots = [];
 		this.setup();
-
 	}
 
 	setup(){
@@ -45,8 +44,8 @@ export default class DBotFramework{
 		});
 
 		commands.set('status', req => {
-			req.reply('checking..!');
-			this.status(req);
+			//req.reply('checking..!');
+			this.getstatus(req);
 		});
 
 		// hello world
@@ -61,22 +60,46 @@ export default class DBotFramework{
 		console.log("bot commands setup...");
 	}
 
-	status(req){
+	async getstatus(req){
 		//!c status
 		console.log('status!');
-		console.log(req.author.username);
+		//console.log(req.author.username);
 		let gun = this.gun;
 
+		let user = await gun.get(req.author.id).then();
+
+		//console.log('test.......................', user);
+		if(!user){
+			user = {
+				id:req.author.id,
+				username:req.author.username,
+				hp:100,
+				maxhp:100,
+				mp:100,
+				maxmp:100,
+				attack:2,
+				defense:1,
+				magicattack:1,
+				magicdefense:1,
+				exp:0,
+				nextexp:5,
+				level:0,
+			}
+			gun.get(req.author.id).put(user);
+		}
+		this.diplaystatus(req,user);
+		
+		/*
 		gun.get(req.author.id).once((data)=>{
 			//console.log(data);
 			if(data != null){
 				console.log("used!");
 				console.log("data >>> ");
 				console.log(data);
+				this.diplaystatus(data)
 			}else{
 				console.log("create");
-				
-				gun.get(req.author.id).put({
+				let user = {
 					id:req.author.id,
 					username:req.author.username,
 					hp:100,
@@ -90,11 +113,27 @@ export default class DBotFramework{
 					exp:0,
 					nextexp:5,
 					level:0,
-
-				});
+				}
 				
+				gun.get(req.author.id).put(user);
+				this.diplaystatus(user);
+
 			}
 		});
+		*/
+	}
+
+	diplaystatus(req,data){
+		//console.log("display info?",data);
+		//req.reply('Name: ' + data.username);
+		req.reply('\nHP: ' + data.hp + '/' + data.maxhp + '\n' +
+			'Attack: ' + data.attack + '\n' +
+			'Defense: ' + data.defense + '\n' +
+			'Magic Attack: ' + data.magicattack + '\n' +
+			'Magic Defense: ' + data.magicdefense + '\n' +
+			'Exp: ' + data.exp + '\n' +
+			'Next Exp: ' + data.nextexp);
+
 	}
 
 }

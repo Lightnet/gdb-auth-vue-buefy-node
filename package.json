@@ -11,11 +11,14 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.49",
+    "@babel/runtime": "^7.0.0-beta.49",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.4",
@@ -76,7 +79,10 @@
           ],
           "alias": {}
         }
-      ]
+      ],
+      ["transform-runtime", {
+        "regenerator": true
+      }]
     ]
   },
   "keywords": [

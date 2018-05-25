@@ -57,6 +57,7 @@ const commonModulejs = {
           },
         {
             test: /\.js$/,
+            exclude: /(node_modules)/,
             include: [
                 path.resolve(__dirname, 'src')//,
                 //path.resolve(__dirname, 'node_modules/lance-gg'),
@@ -64,7 +65,8 @@ const commonModulejs = {
             ],
             loader: 'babel-loader',
             query: {
-                presets: ['babel-preset-env'].map(require.resolve)
+                presets: ['babel-preset-env'].map(require.resolve),
+                plugins: ['@babel/plugin-transform-runtime']
             }
         }
     ]
@@ -117,6 +119,9 @@ var backWebpackConfig = {
         ignored: /node_modules/
     },
     plugins: [
+        //["transform-runtime", {
+            //"regenerator": true,
+        //}]//,
         //new webpack.IgnorePlugin(/\.(css|less)$/),
         //new webpack.BannerPlugin('require("source-map-support").install();',
                              //{ raw: true, entryOnly: false }),
