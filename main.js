@@ -172,7 +172,7 @@ var listener = app.listen(PORT, function () {
 //===============================================
 // Gun.js
 //===============================================
-process.env.GUN_ENV = 'dev';
+process.env.GUN_ENV='false';
 var gunconfig = {
   //file: dbFile,
   //GUN_ENV:0,

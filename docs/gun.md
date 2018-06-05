@@ -14,6 +14,8 @@ amark/gun#debug
 
 npm install amark/gun#debug
 
+process.env.GUN_ENV ='false'
+
 postStatus(){
   ...
   var item = user.get('profile').get('status').set(status); // whatever your existing code is
